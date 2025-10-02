@@ -30,6 +30,7 @@ public class playerController : MonoBehaviour, IDamage
     float shootTimer;
 
     bool isSprinting;
+    bool isCeiling;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -64,6 +65,8 @@ public class playerController : MonoBehaviour, IDamage
 
         jump();
         controller.Move(playerVel * Time.deltaTime);
+    
+
 
         if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
@@ -97,7 +100,8 @@ public class playerController : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
 
     }
 

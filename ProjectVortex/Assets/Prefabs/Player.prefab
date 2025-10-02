@@ -192,9 +192,9 @@ MonoBehaviour:
   HP: 5
   speed: 20
   sprintMod: 3
-  jumpSpeed: 50
+  jumpSpeed: 20
   jumpCountMax: 1
-  gravity: 50
+  gravity: 30
   shootDamage: 0
   shootDist: 0
   shootRate: 0.05
