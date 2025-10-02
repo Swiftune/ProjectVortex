@@ -31,11 +31,10 @@ public class Damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Wait for GameManager
-        //if (type == damageType.homing)
-        //{
-        //    rb.linearVelocity = (gameManager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
-        //}
+        if (type == damageType.homing)
+            {
+                rb.linearVelocity = (GameManager.instance.player.transform.position - transform.position).normalized * speed * Time.deltaTime;
+            }
     }
 
 private void OnTriggerEnter(Collider other)
