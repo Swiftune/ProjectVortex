@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
@@ -23,7 +23,15 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shoot();
+        shootTimer += Time.deltaTime;
+        if (playerInRange)
+        {
+            agent.SetDestination(gameManager.instance.player.transform.position);
+            if (shootTimer > shootRate)
+            {
+                shoot();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
