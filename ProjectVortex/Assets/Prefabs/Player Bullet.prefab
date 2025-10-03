@@ -53,7 +53,7 @@ MonoBehaviour:
   rb: {fileID: 3429130641345701548}
   damageAmount: 1
   damageRate: 0
-  speed: 25
+  speed: 50
   destroyTime: 5
 --- !u!33 &6793933591548941710
 MeshFilter:

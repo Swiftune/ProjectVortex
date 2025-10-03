@@ -97,7 +97,9 @@ public class playerController : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+       GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
+
 
     }
 
