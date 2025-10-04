@@ -4,12 +4,11 @@ using UnityEngine.Rendering;
 
 public class playerController : MonoBehaviour, IDamage
 {
-    [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
 
     [SerializeField] int HP;
-    [SerializeField] int speed;
-    [SerializeField] int sprintMod;
+    [SerializeField] float speed;
+    [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
@@ -103,6 +102,12 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("Collided");
+    //    setYVel(0);
+    //}
+
     public void takeDamage(int amount)
     {
         HP -= amount;
@@ -111,6 +116,16 @@ public class playerController : MonoBehaviour, IDamage
         {
             GameManager.instance.stateLose();
         }
+    }
+
+    public void setYVel(float amount)
+    {
+        playerVel.y = amount;
+    }
+
+    public int GetGrav()
+    {
+        return gravity;
     }
 
 }

@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 8188378043124679252}
   - component: {fileID: 5140265861588674505}
   - component: {fileID: 1139821073451732119}
-  - component: {fileID: 5044406213967631007}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -185,16 +184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd1bdfec6ed22a47a824cd19c52d1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerController
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
   controller: {fileID: 0}
   HP: 5
-  speed: 20
-  sprintMod: 3
-  jumpSpeed: 50
+  speed: 10
+  sprintMod: 1.5
+  jumpSpeed: 15
   jumpCountMax: 1
-  gravity: 50
+  gravity: 30
   shootDamage: 0
   shootDist: 0
   shootRate: 0.05
@@ -256,26 +252,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5044406213967631007
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014497205028353343}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
