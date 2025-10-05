@@ -1,25 +1,34 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.Rendering;
 
 public class playerController : MonoBehaviour, IDamage
 {
-    [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
+
     [SerializeField] int HP;
-    [SerializeField] int speed;
-    [SerializeField] int sprintMod;
+    [SerializeField] float speed;
+    [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
+    [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
-    [SerializeField] int shootDist;
+
     [SerializeField] int shootDamage;
+    [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform shootPos;
 
     Vector3 moveDir;
     Vector3 playerVel;
-    int jumpCount = 0;
-    bool isSprinting;
-    float shootTimer;
+
+    int jumpCount;
     int HPOrig;
+
+    float shootTimer;
+
+    bool isSprinting;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,11 +39,13 @@ public class playerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
         shootTimer += Time.deltaTime;
+
         movement();
+
         sprint();
     }
+
     void movement()
     {
         if (controller.isGrounded)
@@ -46,15 +57,20 @@ public class playerController : MonoBehaviour, IDamage
         {
             playerVel.y -= gravity * Time.deltaTime;
         }
+
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
+
         jump();
         controller.Move(playerVel * Time.deltaTime);
-        if (Input.GetButton("Fire1") && shootTimer > shootRate)
+
+        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
         {
             shoot();
         }
+
     }
+
     void sprint()
     {
         if (Input.GetButtonDown("Sprint"))
@@ -66,31 +82,50 @@ public class playerController : MonoBehaviour, IDamage
             speed /= sprintMod;
         }
     }
+
     void jump()
     {
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpCountMax)
         {
             playerVel.y = jumpSpeed;
             jumpCount++;
         }
     }
+
     void shoot()
     {
         shootTimer = 0;
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreLayer))
-        {
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if (dmg != null)
-            {
-                dmg.takeDamage(shootDamage);
-            }
-            Debug.Log(hit.collider.name);
-        }
+       GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
+
+
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("Collided");
+    //    setYVel(0);
+    //}
 
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        if (HP <= 0)
+        {
+            GameManager.instance.stateLose();
+        }
     }
+
+    public void setYVel(float amount)
+    {
+        playerVel.y = amount;
+    }
+
+    public int GetGrav()
+    {
+        return gravity;
+    }
+
 }
