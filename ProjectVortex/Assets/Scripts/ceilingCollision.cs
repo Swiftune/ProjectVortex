@@ -14,7 +14,7 @@ public class ceilingCollision : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.up, rayDist, collisionLayer))
         {
             test = true;
-            playerCharacter.setYVel(-5);
+            playerCharacter.setYVel(-(playerCharacter.GetGrav() * Time.deltaTime));
         }
         else
         {
