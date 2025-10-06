@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
@@ -12,14 +13,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject patrolStart;
-    [SerializeField] GameObject patrolEnd;
     [SerializeField] float shootRate;
     [SerializeField] bool withGun;
 
     Color colorOrig;
     float shootTimer;
     bool playerInRange;
-    bool pointReached;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,14 +34,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             shootPos = null;
             bullet = null;
         }
-        if(Time.deltaTime % stopTime == 0)
-        {
-            pointReached = true;
-        }
-        else
-        {
-            pointReached = false;
-        }
             shootTimer += Time.deltaTime;
         if (playerInRange)
         {
@@ -55,15 +46,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         else
         {
-            agent.stoppingDistance = 0;
-            if (pointReached)
-            {
-                agent.SetDestination(patrolEnd.transform.position);
-            }
-            else
-            {
-                agent.SetDestination(patrolStart.transform.position);
-            }
+            agent.stoppingDistance = 3;
+            agent.SetDestination(patrolStart.transform.position);
         }
     }
 
@@ -102,7 +86,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         model.material.color = colorOrig;
     }
 }

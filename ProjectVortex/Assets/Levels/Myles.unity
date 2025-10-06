@@ -793,6 +793,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 5703235990690411577, guid: 74a80670e95925147b28865fd87a953d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1041,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 5703235990690411577, guid: 74a80670e95925147b28865fd87a953d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1260,6 +1268,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2076136649749760093, guid: 74a80670e95925147b28865fd87a953d, type: 3}
   m_PrefabInstance: {fileID: 926840404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &930779986 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5703235990690411577, guid: 74a80670e95925147b28865fd87a953d, type: 3}
+  m_PrefabInstance: {fileID: 511881627}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &976365939
 PrefabInstance:
@@ -1699,59 +1712,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2076136649749760093, guid: 74a80670e95925147b28865fd87a953d, type: 3}
   m_PrefabInstance: {fileID: 1220404370}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1221571198
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1221571200}
-  - component: {fileID: 1221571199}
-  m_Layer: 0
-  m_Name: Start
-  m_TagString: Patrol
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1221571199
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1221571198}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1221571200
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1221571198}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.5, y: 1, z: 38.75}
-  m_LocalScale: {x: 5, y: 1, z: 5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1293358170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2318,59 +2278,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2076136649749760093, guid: 74a80670e95925147b28865fd87a953d, type: 3}
   m_PrefabInstance: {fileID: 1720064652}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1723592104
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1723592106}
-  - component: {fileID: 1723592105}
-  m_Layer: 0
-  m_Name: End
-  m_TagString: Patrol End
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1723592105
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723592104}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1723592106
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723592104}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26, y: 1, z: -23.5}
-  m_LocalScale: {x: 5, y: 1, z: 5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1758034941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3085,8 +2992,6 @@ GameObject:
   - component: {fileID: 1290179954641783405}
   - component: {fileID: 1290179954641783404}
   - component: {fileID: 1290179954641783407}
-  - component: {fileID: 1290179954641783408}
-  - component: {fileID: 1290179954641783403}
   m_Layer: 7
   m_Name: Sniper
   m_TagString: Untagged
@@ -3980,27 +3885,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!135 &1290179954641783403
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290179954634408460}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 100
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &1290179954641783404
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4037,7 +3921,7 @@ NavMeshAgent:
   m_Speed: 6
   m_Acceleration: 4
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -4062,11 +3946,10 @@ MonoBehaviour:
   agent: {fileID: 1290179954641783405}
   HP: 4
   stopDist: 17
-  stopTime: 8
+  stopTime: 5
   shootPos: {fileID: 399958392}
   bullet: {fileID: 6665195746880408852, guid: 9e3b81cd19e8f414e97716bbda78cc8b, type: 3}
-  patrolStart: {fileID: 1221571198}
-  patrolEnd: {fileID: 1723592104}
+  patrolStart: {fileID: 930779986}
   shootRate: 4
   withGun: 1
 --- !u!135 &1290179954641783407
@@ -4088,28 +3971,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 45
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &1290179954641783408
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290179954634408460}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1478435298347166976
 GameObject:
@@ -5173,7 +5035,7 @@ NavMeshAgent:
   m_Speed: 4
   m_Acceleration: 4
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -5198,11 +5060,10 @@ MonoBehaviour:
   agent: {fileID: 1478435298356551373}
   HP: 5
   stopDist: 8
-  stopTime: 8
+  stopTime: 10
   shootPos: {fileID: 1969839218}
   bullet: {fileID: 6665195746880408852, guid: 9e3b81cd19e8f414e97716bbda78cc8b, type: 3}
-  patrolStart: {fileID: 1221571198}
-  patrolEnd: {fileID: 1723592104}
+  patrolStart: {fileID: 930779986}
   shootRate: 1
   withGun: 1
 --- !u!135 &1478435298356551375
@@ -6155,8 +6016,6 @@ GameObject:
   - component: {fileID: 4588237434220650983}
   - component: {fileID: 4588237434220650985}
   - component: {fileID: 4588237434220650987}
-  - component: {fileID: 4588237434220650988}
-  - component: {fileID: 4588237434220650986}
   m_Layer: 7
   m_Name: Melee
   m_TagString: Untagged
@@ -6292,7 +6151,7 @@ NavMeshAgent:
   m_Speed: 8
   m_Acceleration: 4
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 180
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -6317,11 +6176,10 @@ MonoBehaviour:
   agent: {fileID: 4588237434220650983}
   HP: 6
   stopDist: 5
-  stopTime: 8
+  stopTime: 7
   shootPos: {fileID: 0}
   bullet: {fileID: 0}
-  patrolStart: {fileID: 1221571198}
-  patrolEnd: {fileID: 1723592104}
+  patrolStart: {fileID: 930779986}
   shootRate: 0
   withGun: 0
 --- !u!136 &4588237434220650985
@@ -6347,27 +6205,6 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!135 &4588237434220650986
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4588237434211160660}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 100
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &4588237434220650987
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6388,27 +6225,6 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 25
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &4588237434220650988
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4588237434211160660}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5854804596731402358
 PrefabInstance:
@@ -6482,6 +6298,4 @@ SceneRoots:
   - {fileID: 1478435298347462942}
   - {fileID: 1290179954634877126}
   - {fileID: 4588237434210864692}
-  - {fileID: 1221571200}
-  - {fileID: 1723592106}
   - {fileID: 2099313598}
