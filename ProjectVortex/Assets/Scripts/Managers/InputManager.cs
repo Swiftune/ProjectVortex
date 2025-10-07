@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class InputManager : MonoBehaviour
 {
@@ -18,8 +19,10 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         pInput = new PlayerInput();
+        // Enable all input maps to start with
         pInput.Enable();
 
+        // Subscribe a method to the UI's Pause' Event Key being "started"
         pInput.UI.Pause.started += Pause_Started;
         pInput.Combat.Shoot.performed += Shoot_performed;
 
@@ -28,9 +31,11 @@ public class InputManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        // Disable input to avoid memory leaks
         pInput.Disable();
 
-        pInput.UI.Pause.started -= Pause_Started;
+        // UNSUBSCRIBE a method to the UI's Pause' Event Key being "started"
+        pInput.UI.Pause.started -= Pause_Started; // this will be called when the event is hit
         pInput.Combat.Shoot.performed -= Shoot_performed;
     }
 
