@@ -953,9 +953,9 @@ MonoBehaviour:
   agent: {fileID: 5803513635270616784}
   headPos: {fileID: 2061413634603167957}
   HP: 6
-  faceTargetSpeed: 1
+  faceTargetSpeed: 0
   FOV: 180
-  roamDist: 15
+  roamDist: 30
   roamPauseTime: 4
   shootPos: {fileID: 7726012548486227775}
   bullet: {fileID: 5600058646524127850, guid: aeef194846bffdd4a839c7d007bf5b6c, type: 3}
@@ -974,7 +974,7 @@ NavMeshAgent:
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
