@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
         pInput.UI.Pause.started += Pause_Started;
         pInput.Combat.Shoot.performed += Shoot_performed;
         pInput.Combat.Shoot.canceled += Shoot_canceled;
+        pInput.Movement.Jump.started += Jump_started;
 
         player = GameManager.instance.player.GetComponent<playerController>();
     }
@@ -39,6 +40,7 @@ public class InputManager : MonoBehaviour
         pInput.UI.Pause.started -= Pause_Started; // this will be called when the event is hit
         pInput.Combat.Shoot.performed -= Shoot_performed;
         pInput.Combat.Shoot.canceled -= Shoot_canceled;
+        pInput.Movement.Jump.performed -= Jump_started;
     }
 
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -51,6 +53,11 @@ public class InputManager : MonoBehaviour
         player.shootEnabled = false;
     }
 
+    private void Jump_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        player.jump();
+    }
+
     private void Pause_Started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         PauseEvent();
@@ -58,8 +65,6 @@ public class InputManager : MonoBehaviour
 
     public void PauseEvent()
     {
-        Debug.Log(pInput.UI.Pause.WasPressedThisFrame());
-
         if (GameManager.instance.isPaused)
         {
             GameManager.instance.stateUnpause();

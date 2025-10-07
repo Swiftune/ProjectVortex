@@ -30,15 +30,11 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool shootEnabled;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HPOrig = HP;
-
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
@@ -52,7 +48,8 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (controller.isGrounded)
         {
-            playerVel = Vector3.zero;
+            if (playerVel.y < 0)
+                playerVel.y = 0;
             jumpCount = 0;
         }
         else
@@ -61,9 +58,9 @@ public class playerController : MonoBehaviour, IDamage
         }
 
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        controller.Move(moveDir * speed * Time.deltaTime);
 
-        jump();
+        Vector3 finalMove = moveDir * speed + playerVel;
+        controller.Move(finalMove * Time.deltaTime);
     }
 
     void sprint()
@@ -78,11 +75,13 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    void jump()
+    public void jump()
     {
-
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpCountMax)
+        if (jumpCount < jumpCountMax)
         {
+            if (playerVel.y < 0)
+                playerVel.y = 0;
+
             playerVel.y = jumpSpeed;
             jumpCount++;
         }
@@ -98,12 +97,9 @@ public class playerController : MonoBehaviour, IDamage
 
     void shoot()
     {
-
         shootTimer = 0;
         GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
         newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
-
-
     }
 
     public void takeDamage(int amount)
@@ -135,5 +131,4 @@ public class playerController : MonoBehaviour, IDamage
     {
         return HPOrig;
     }
-
 }
