@@ -20,9 +20,6 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
 
-    PlayerInput pInput;
-
-
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -31,7 +28,6 @@ public class playerController : MonoBehaviour, IDamage
 
     float shootTimer;
 
-    bool isSprinting;
     public bool shootEnabled;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,40 +35,8 @@ public class playerController : MonoBehaviour, IDamage
     {
         HPOrig = HP;
 
-        pInput = new PlayerInput();
-        pInput.Enable();
-        pInput.UI.Pause.performed += Pause_performed;
-        pInput.Combat.Shoot.performed += Shoot_performed;
     }
 
-    private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        if (shootTimer >= shootRate)
-        {
-            shoot();
-        }
-    }
-
-    public void PauseEvent()
-    {
-        if (GameManager.instance.isPaused)
-        {
-            GameManager.instance.stateUnpause();
-            pInput.Combat.Enable();
-            shootTimer = 0.001f;
-        }
-        else
-        {
-            GameManager.instance.statePause();
-            pInput.Combat.Disable();
-        }
-        Debug.Log("PAUSE WAS PRESSED");
-    }
-
-    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        PauseEvent();
-    }
 
     // Update is called once per frame
     void Update()
@@ -100,10 +64,6 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(moveDir * speed * Time.deltaTime);
 
         jump();
-        controller.Move(playerVel * Time.deltaTime);
-
-
-
     }
 
     void sprint()

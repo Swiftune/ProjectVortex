@@ -42,7 +42,7 @@ public class InputManager : MonoBehaviour
     }
 
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
+    {
         player.shootEnabled = true;
     }
 
@@ -54,7 +54,6 @@ public class InputManager : MonoBehaviour
     private void Pause_Started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         PauseEvent();
-        Debug.Log("Pause event ran");
     }
 
     public void PauseEvent()
@@ -68,7 +67,6 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Paused?");
             GameManager.instance.statePause();
             pInput.Combat.Disable();
         }
