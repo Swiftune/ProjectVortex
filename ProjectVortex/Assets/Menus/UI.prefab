@@ -3522,7 +3522,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2136405268756070734}
-  - component: {fileID: 7158477491908870237}
   - component: {fileID: 2889707332330768702}
   m_Layer: 5
   m_Name: GameManager
@@ -3546,25 +3545,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7121197959001164284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7158477491908870237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6867157174141942928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae9c5b0ddc208a4a9d7ce0544a40b96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  menuActive: {fileID: 0}
-  menuPause: {fileID: 809359016768297966}
-  menuLose: {fileID: 6738377284891328392}
-  menuWin: {fileID: 4383290073524699589}
-  player: {fileID: 0}
-  playerScript: {fileID: 0}
-  isPaused: 0
 --- !u!114 &2889707332330768702
 MonoBehaviour:
   m_ObjectHideFlags: 0

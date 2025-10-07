@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
+    [SerializeField] Slider slider;
 
     public GameObject player;
     public playerController playerScript;
@@ -33,19 +35,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetButtonDown("Cancel"))
-        //{
-        //    if (menuActive == null)
-        //    {
-        //        statePause();
-        //        menuActive = menuPause;
-        //        menuActive.SetActive(true);
-        //    }
-        //    else if (menuActive == menuPause)
-        //    {
-        //        stateUnpause();
-        //    }
-        //}
+        checkHP();
     }
 
     public void statePause()
@@ -89,4 +79,10 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+
+    public void checkHP()
+    {
+        slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
+    }
 }
+
