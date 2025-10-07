@@ -162,4 +162,9 @@ public class playerController : MonoBehaviour, IDamage
         return HP;
     }
 
+    public int GetHPOrig()
+    {
+        return HPOrig;
+    }
+
 }
