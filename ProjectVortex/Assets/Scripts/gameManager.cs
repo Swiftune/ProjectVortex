@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
             {
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void statePause()
+    public void statePause()
     {
         isPaused = !isPaused;
         Time.timeScale = 0;
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    void stateUnpause()
+    public void stateUnpause()
     {
         isPaused = !isPaused;
         Time.timeScale = timeScaleOrig;
