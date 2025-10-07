@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
 
     public GameObject player;
-    public playerController playerScript;
+    //public PlayerController playerScript;
 
     public bool isPaused;
 
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
+        //playerScript = player.GetComponent<PlayerController>();
 
 
     }
