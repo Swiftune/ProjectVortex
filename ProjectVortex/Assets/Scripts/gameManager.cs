@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive?.SetActive(false);
         menuActive = null;
-        
+
     }
 
     public void UpdateGameGoal(int amount)
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void checkHP()
     {
-        slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
+        //slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
     }
 }
 
