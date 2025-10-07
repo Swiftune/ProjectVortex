@@ -1,56 +1,60 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
-using Unity.VisualScripting;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] int HP;
-    [SerializeField] float stopDist;
-    [SerializeField] float stopTime;
+    [SerializeField] int faceTargetSpeed;
+    [SerializeField] int FOV;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
-    [SerializeField] GameObject patrolStart;
     [SerializeField] float shootRate;
-    [SerializeField] bool withGun;
 
     Color colorOrig;
     float shootTimer;
+    float angleToPlayer;
     bool playerInRange;
+    Vector3 playerDir;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.material.color;
         GameManager.instance.UpdateGameGoal(1);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!withGun)
+        shootTimer += Time.deltaTime;
+        if (playerInRange && canSeePlayer())
         {
-            shootPos = null;
-            bullet = null;
-        }
-            shootTimer += Time.deltaTime;
-        if (playerInRange)
-        {
-            agent.stoppingDistance = stopDist;
-            agent.SetDestination(GameManager.instance.player.transform.position);
-            if (shootTimer > shootRate)
-            {
-                shoot();
-            }
-        }
-        else
-        {
-            agent.stoppingDistance = 3;
-            agent.SetDestination(patrolStart.transform.position);
+
         }
     }
+    bool canSeePlayer()
+    {
+        playerDir = GameManager.instance.player.transform.position - transform.position;
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+        Debug.DrawRay(transform.position, playerDir, Color.greenYellow);
+        RaycastHit Hit;
+        if (Physics.Raycast(transform.position, playerDir, out Hit))
+        {
+            Debug.Log(Hit.collider.name);
+            if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
+            {
+                agent.SetDestination(GameManager.instance.player.transform.position);
+                if (shootTimer > shootRate)
+                {
+                    shoot();
+                }
+                return true;
+            }
+        }
+        return false;
 
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -86,7 +90,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
 }
