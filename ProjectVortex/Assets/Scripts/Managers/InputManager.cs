@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
         // Subscribe a method to the UI's Pause' Event Key being "started"
         pInput.UI.Pause.started += Pause_Started;
         pInput.Combat.Shoot.performed += Shoot_performed;
+        pInput.Combat.Shoot.canceled += Shoot_canceled;
 
         player = GameManager.instance.player.GetComponent<playerController>();
     }
@@ -37,11 +38,17 @@ public class InputManager : MonoBehaviour
         // UNSUBSCRIBE a method to the UI's Pause' Event Key being "started"
         pInput.UI.Pause.started -= Pause_Started; // this will be called when the event is hit
         pInput.Combat.Shoot.performed -= Shoot_performed;
+        pInput.Combat.Shoot.canceled -= Shoot_canceled;
     }
 
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+        player.shootEnabled = true;
+    }
+
+    private void Shoot_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        player.ShootEvent();
+        player.shootEnabled = false;
     }
 
     private void Pause_Started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
