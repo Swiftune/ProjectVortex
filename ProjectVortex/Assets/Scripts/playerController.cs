@@ -102,12 +102,6 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Collided");
-    //    setYVel(0);
-    //}
-
     public void takeDamage(int amount)
     {
         HP -= amount;
