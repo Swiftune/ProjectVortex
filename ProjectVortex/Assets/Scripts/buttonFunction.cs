@@ -7,7 +7,7 @@ public class ButtonFunction : MonoBehaviour
 
     public void resume()
     {
-        GameManager.instance.stateUnpause();
+        GameObject.FindWithTag("Player").GetComponent<playerController>().PauseEvent();
 
     }
 
