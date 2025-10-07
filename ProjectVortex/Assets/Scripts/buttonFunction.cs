@@ -7,14 +7,13 @@ public class ButtonFunction : MonoBehaviour
 
     public void resume()
     {
-        GameObject.FindWithTag("Player").GetComponent<playerController>().PauseEvent();
+        InputManager.Instance.PauseEvent();
 
     }
 
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameManager.instance.stateUnpause();
     }
     public void quit()
     {
@@ -26,5 +25,5 @@ public class ButtonFunction : MonoBehaviour
 
         GameManager.instance.stateUnpause();
     }
-  
+
 }

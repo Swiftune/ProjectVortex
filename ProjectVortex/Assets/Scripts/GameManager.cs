@@ -32,11 +32,12 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        Debug.Log("Game Start");
         checkHP();
     }
+
 
     public void statePause()
     {
@@ -57,8 +58,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
+        menuActive?.SetActive(false);
         menuActive = null;
+        
     }
 
     public void UpdateGameGoal(int amount)
