@@ -33,27 +33,32 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
-        {
-            if (menuActive == null)
-            {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(true);
-            }
-            else if (menuActive == menuPause)
-            {
-                stateUnpause();
-            }
-        }
+        //if (Input.GetButtonDown("Cancel"))
+        //{
+        //    if (menuActive == null)
+        //    {
+        //        statePause();
+        //        menuActive = menuPause;
+        //        menuActive.SetActive(true);
+        //    }
+        //    else if (menuActive == menuPause)
+        //    {
+        //        stateUnpause();
+        //    }
+        //}
     }
 
     public void statePause()
     {
+        menuActive = menuPause;
+        menuActive.SetActive(true);
+
         isPaused = !isPaused;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+
     }
 
     public void stateUnpause()
