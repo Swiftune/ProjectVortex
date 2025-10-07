@@ -47,15 +47,12 @@ public class GameManager : MonoBehaviour
     public void statePause()
     {
         menuActive = menuPause;
-        Debug.Log("StatePaused?");
         menuActive.SetActive(true);
 
         isPaused = !isPaused;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-
     }
 
     public void stateUnpause()
