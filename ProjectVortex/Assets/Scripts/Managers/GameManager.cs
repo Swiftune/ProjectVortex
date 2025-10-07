@@ -40,8 +40,11 @@ public class GameManager : MonoBehaviour
 
     public void statePause()
     {
-        menuActive = menuPause;
-        menuActive.SetActive(true);
+        if (menuActive == null)
+        {
+            menuActive = menuPause;
+            menuActive.SetActive(true);
+        }
 
         isPaused = !isPaused;
         Time.timeScale = 0;
@@ -67,24 +70,26 @@ public class GameManager : MonoBehaviour
 
         if (gameGoalCount <= 0)
         {
-            statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
+            statePause();
         }
     }
 
     public void stateLose()
     {
-        statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+        statePause();
     }
 
     public void checkHP()
     {
         if (playerScript.GetHPOrig() > 0)
         {
-            slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
+            slider.maxValue = playerScript.GetHPOrig();
+            slider.minValue = 0;
         }
+        slider.value = playerScript.GetHP();
     }
 }
