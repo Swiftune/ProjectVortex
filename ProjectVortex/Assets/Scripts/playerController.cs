@@ -28,7 +28,7 @@ public class playerController : MonoBehaviour, IDamage
 
     float shootTimer;
 
-    bool isSprinting;
+    public bool shootEnabled;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,7 +44,7 @@ public class playerController : MonoBehaviour, IDamage
         shootTimer += Time.deltaTime;
 
         movement();
-
+        ShootEvent();
         sprint();
     }
 
@@ -90,7 +90,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void ShootEvent()
     {
-        if (shootTimer >= shootRate)
+        if (shootEnabled && shootTimer >= shootRate)
         {
             shoot();
         }
