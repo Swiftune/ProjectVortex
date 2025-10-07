@@ -157,4 +157,9 @@ public class playerController : MonoBehaviour, IDamage
         return gravity;
     }
 
+    public int GetHP()
+    {
+        return HP;
+    }
+
 }
