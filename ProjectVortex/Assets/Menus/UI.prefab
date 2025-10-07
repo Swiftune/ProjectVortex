@@ -3983,7 +3983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2136405268756070734}
   - component: {fileID: 2889707332330768702}
-  - component: {fileID: 8719119328192207550}
+  - component: {fileID: 7461233412733479822}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -4018,7 +4018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc82f6768e6ed443969e3cb71cb229f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonFunction
---- !u!114 &8719119328192207550
+--- !u!114 &7461233412733479822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4027,14 +4027,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6867157174141942928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae9c5b0ddc208a4a9d7ce0544a40b96, type: 3}
+  m_Script: {fileID: 11500000, guid: 078bc52907db59749a83b5a81d2453e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   menuActive: {fileID: 0}
   menuPause: {fileID: 809359016768297966}
   menuLose: {fileID: 6738377284891328392}
   menuWin: {fileID: 4383290073524699589}
-  slider: {fileID: 0}
+  slider: {fileID: 1116694188429829999}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   isPaused: 0

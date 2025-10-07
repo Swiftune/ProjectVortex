@@ -32,12 +32,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Start()
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log("Game Start");
         checkHP();
     }
-
 
     public void statePause()
     {
@@ -58,9 +57,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive?.SetActive(false);
+        menuActive.SetActive(false);
         menuActive = null;
-
     }
 
     public void UpdateGameGoal(int amount)
@@ -84,7 +82,6 @@ public class GameManager : MonoBehaviour
 
     public void checkHP()
     {
-        //slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
+        slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
     }
 }
-

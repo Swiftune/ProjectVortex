@@ -326,10 +326,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2292794423940639760, guid: 8c81cc721eea8474282b955d302da665, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7121197959001164284, guid: 8c81cc721eea8474282b955d302da665, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.64544
@@ -374,10 +370,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 8719119328192207550, guid: 8c81cc721eea8474282b955d302da665, type: 3}
-      propertyPath: slider
-      value: 
-      objectReference: {fileID: 1406780093}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -440,17 +432,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1ab5e6081818514695beb59f7ca2379, type: 3}
---- !u!114 &1406780093 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1116694188429829999, guid: 8c81cc721eea8474282b955d302da665, type: 3}
-  m_PrefabInstance: {fileID: 1052766990}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &1744229317
 PrefabInstance:
   m_ObjectHideFlags: 0
