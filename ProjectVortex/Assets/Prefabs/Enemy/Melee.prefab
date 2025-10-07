@@ -953,7 +953,7 @@ MonoBehaviour:
   agent: {fileID: 5803513635270616784}
   headPos: {fileID: 2061413634603167957}
   HP: 6
-  faceTargetSpeed: 1
+  faceTargetSpeed: 0
   FOV: 180
   roamDist: 30
   roamPauseTime: 4
