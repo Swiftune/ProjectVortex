@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     {
         pInput = new PlayerInput();
         pInput.Enable();
+
         pInput.UI.Pause.performed += Pause_performed;
         pInput.Combat.Shoot.performed += Shoot_performed;
 
@@ -44,6 +45,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("Paused?");
             GameManager.instance.statePause();
             pInput.Combat.Disable();
         }

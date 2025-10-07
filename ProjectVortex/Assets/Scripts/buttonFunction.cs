@@ -14,6 +14,7 @@ public class ButtonFunction : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = GameManager.instance.OriginalTimeScale;
     }
     public void quit()
     {

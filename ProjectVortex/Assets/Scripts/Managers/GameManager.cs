@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
 
     float timeScaleOrig;
+    public float OriginalTimeScale => timeScaleOrig;
 
     int gameGoalCount;
 
@@ -32,6 +33,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        Time.timeScale = timeScaleOrig;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,11 +46,9 @@ public class GameManager : MonoBehaviour
 
     public void statePause()
     {
-        if (menuActive == null)
-        {
-            menuActive = menuPause;
-            menuActive.SetActive(true);
-        }
+        menuActive = menuPause;
+        Debug.Log("StatePaused?");
+        menuActive.SetActive(true);
 
         isPaused = !isPaused;
         Time.timeScale = 0;
@@ -70,26 +74,24 @@ public class GameManager : MonoBehaviour
 
         if (gameGoalCount <= 0)
         {
+            statePause();
             menuActive = menuWin;
             menuActive.SetActive(true);
-            statePause();
         }
     }
 
     public void stateLose()
     {
+        statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
-        statePause();
     }
 
     public void checkHP()
     {
         if (playerScript.GetHPOrig() > 0)
         {
-            slider.maxValue = playerScript.GetHPOrig();
-            slider.minValue = 0;
+            slider.value = playerScript.GetHP() / playerScript.GetHPOrig();
         }
-        slider.value = playerScript.GetHP();
     }
 }
