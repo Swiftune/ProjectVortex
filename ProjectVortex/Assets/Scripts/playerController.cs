@@ -64,10 +64,6 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(moveDir * speed * Time.deltaTime);
 
         jump();
-        controller.Move(playerVel * Time.deltaTime);
-        Debug.Log("Moved");
-
-
     }
 
     void sprint()

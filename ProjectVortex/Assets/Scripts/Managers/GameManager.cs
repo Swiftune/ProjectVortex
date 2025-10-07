@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
 
     float timeScaleOrig;
+    public float OriginalTimeScale => timeScaleOrig;
 
     int gameGoalCount;
 
@@ -30,6 +31,11 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
 
 
+    }
+
+    private void Start()
+    {
+        Time.timeScale = timeScaleOrig;
     }
 
     // Update is called once per frame
@@ -50,8 +56,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-
     }
 
     public void stateUnpause()
