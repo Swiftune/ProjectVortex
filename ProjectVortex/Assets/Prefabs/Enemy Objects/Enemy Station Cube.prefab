@@ -48,10 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Damage
   type: 1
   rb: {fileID: -7270775968544171491}
-  damageAmount: 1
+  damageAmount: 3
   damageRate: 1
-  speed: 25
-  destroyTime: 3
+  speed: 0
+  destroyTime: 0
 --- !u!65 &-1233470894112678498
 BoxCollider:
   m_ObjectHideFlags: 0
