@@ -13,6 +13,9 @@ public class RoomController : MonoBehaviour
 
     void Start()
     {
+        // Adds this room to the goal count
+        GameManager.instance.UpdateGameGoal(1);
+
         // Disable enemies until player enters
         foreach (var enemy in enemies)
         {
@@ -66,10 +69,7 @@ public class RoomController : MonoBehaviour
                     enemy.SetActive(true);
             }
 
-            // Add one to the global goal count for this room
-            GameManager.instance.UpdateGameGoal(1);
-
-            // Optional: close exit until room cleared
+            // Optional: close exit until room cleared (that way it checks if there's 
             if (doorExit != null)
                 doorExit.SetActive(true);
         }
