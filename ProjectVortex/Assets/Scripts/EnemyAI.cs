@@ -74,7 +74,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
-            Debug.Log(Hit.collider.name);
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
