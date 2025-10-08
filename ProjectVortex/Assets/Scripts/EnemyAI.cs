@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-        if (agent.remainingDistance < 0.01f)
+        if (agent.remainingDistance < 0.1f)
         {
             roamTimer += Time.deltaTime;
         }
@@ -60,7 +60,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     void roam()
     {
         roamTimer = 0;
-        agent.stoppingDistance = 0;
         Vector3 ranPos = Random.insideUnitSphere * roamDist;
         ranPos += startingPos;
         NavMeshHit hit;
@@ -71,11 +70,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-        Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
+        Debug.DrawRay(transform.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
-            Debug.Log(Hit.collider.name);
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
@@ -86,11 +84,12 @@ public class EnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
-                    agent.stoppingDistance = stoppingDistOrg;
                 }
+                agent.stoppingDistance = stoppingDistOrg;
                 return true;
             }
         }
+        agent.stoppingDistance = 0;
         return false;
 
     }
@@ -112,7 +111,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            agent.stoppingDistance = 0;
         }
     }
     void shoot()
@@ -137,7 +135,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         model.material.color = colorOrig;
     }
 }
