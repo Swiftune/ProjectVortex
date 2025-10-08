@@ -27,8 +27,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.material.color;
-        GameManager.instance.UpdateGameGoal(1);
+        colorOrig = model.sharedMaterial.color;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
     }
@@ -127,7 +126,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             Destroy(gameObject);
-            GameManager.instance.UpdateGameGoal(-1);
         }
         else
         {
@@ -136,8 +134,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
+        model.sharedMaterial.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
+        model.sharedMaterial.color = colorOrig;
     }
 }
