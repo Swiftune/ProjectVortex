@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = timeScaleOrig;
+        stateMain();
     }
 
     // Update is called once per frame
@@ -102,6 +103,18 @@ public class GameManager : MonoBehaviour
     {
         menuActive = menuMain;
         menuActive.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         statePause();
+    }
+
+    public GameObject getActiveMenu()
+    {
+        return menuActive;
+    }
+
+    public void setActiveMenu(GameObject newMenu)
+    {
+        menuActive = newMenu;
     }
 }

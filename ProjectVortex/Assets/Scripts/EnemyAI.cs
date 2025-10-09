@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    Material mat;
     Color colorOrig;
     float shootTimer;
     float roamTimer;
@@ -27,8 +28,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.material.color;
-        GameManager.instance.UpdateGameGoal(1);
+        EnsureMat();
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
     }
@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-        if (agent.remainingDistance < 0.1f)
+        if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
         }
@@ -50,6 +50,32 @@ public class EnemyAI : MonoBehaviour, IDamage
             checkRoam();
         }
     }
+
+    bool EnsureMat()
+    {
+        // if the model is missing or is not on the scene, find on the enemy
+        if (model == null || !model.gameObject.scene.IsValid())
+        {
+            // finds the enemy render
+            model = GetComponentInChildren<Renderer>(true);
+        }
+
+        // Bail if can't find the model
+        if (model == null)
+        {
+            return false;
+        }
+
+        // set the material
+        if (mat ==  null)
+        {
+            mat = model.material;
+            colorOrig = mat.color;
+        }
+
+        return true;
+    }
+
     void checkRoam()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
@@ -60,6 +86,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void roam()
     {
         roamTimer = 0;
+        agent.stoppingDistance = 0;
         Vector3 ranPos = Random.insideUnitSphere * roamDist;
         ranPos += startingPos;
         NavMeshHit hit;
@@ -70,7 +97,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-        Debug.DrawRay(transform.position, playerDir, Color.greenYellow);
+        Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
@@ -84,13 +111,13 @@ public class EnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
+                    agent.stoppingDistance = stoppingDistOrg;
                 }
-                agent.stoppingDistance = stoppingDistOrg;
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
         return false;
+
     }
 
     void faceTarget()
@@ -110,6 +137,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            agent.stoppingDistance = 0;
         }
     }
     void shoot()
@@ -124,7 +152,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             Destroy(gameObject);
-            GameManager.instance.UpdateGameGoal(-1);
         }
         else
         {
@@ -134,7 +161,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
 }
