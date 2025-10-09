@@ -5,6 +5,17 @@ public class ButtonFunction : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    public void startGame()
+    {
+        SceneManager.LoadScene("Nigel"); 
+    }
+
+    public void getMainMenu()
+    {
+        GameManager.instance.stateMain(); 
+        
+    }
+
     public void resume()
     {
         InputManager.Instance.PauseEvent();
@@ -16,6 +27,8 @@ public class ButtonFunction : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         InputManager.Instance.PauseEvent();
     }
+
+
     public void quit()
     {
 #if UNITY_EDITOR
