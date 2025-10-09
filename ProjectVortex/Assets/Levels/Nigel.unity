@@ -10744,6 +10744,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7320109979723292697, guid: 8c81cc721eea8474282b955d302da665, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320109979723292697, guid: 8c81cc721eea8474282b955d302da665, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320109979723292697, guid: 8c81cc721eea8474282b955d302da665, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320109979723292697, guid: 8c81cc721eea8474282b955d302da665, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320109979723292697, guid: 8c81cc721eea8474282b955d302da665, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320109979723292697, guid: 8c81cc721eea8474282b955d302da665, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7373729520237839726, guid: 8c81cc721eea8474282b955d302da665, type: 3}
       propertyPath: m_Name
       value: UI
