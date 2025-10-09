@@ -104,4 +104,9 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
         statePause();
     }
+
+    public GameObject getActiveMenu()
+    {
+        return menuActive;
+    }
 }
