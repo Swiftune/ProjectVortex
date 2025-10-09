@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    Material mat;
     Color colorOrig;
     float shootTimer;
     float roamTimer;
@@ -27,7 +28,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        colorOrig = model.sharedMaterial.color;
+        EnsureMat();
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
     }
@@ -49,6 +50,32 @@ public class EnemyAI : MonoBehaviour, IDamage
             checkRoam();
         }
     }
+
+    bool EnsureMat()
+    {
+        // if the model is missing or is not on the scene, find on the enemy
+        if (model == null || !model.gameObject.scene.IsValid())
+        {
+            // finds the enemy render
+            model = GetComponentInChildren<Renderer>(true);
+        }
+
+        // Bail if can't find the model
+        if (model == null)
+        {
+            return false;
+        }
+
+        // set the material
+        if (mat ==  null)
+        {
+            mat = model.material;
+            colorOrig = mat.color;
+        }
+
+        return true;
+    }
+
     void checkRoam()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
@@ -133,8 +160,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator flashRed()
     {
-        model.sharedMaterial.color = Color.red;
+        model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.sharedMaterial.color = colorOrig;
+        model.material.color = colorOrig;
     }
 }
