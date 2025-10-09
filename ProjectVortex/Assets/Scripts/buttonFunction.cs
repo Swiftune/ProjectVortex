@@ -12,7 +12,8 @@ public class ButtonFunction : MonoBehaviour
 
     public void getMainMenu()
     {
-        GameManager.instance.stateMain(); 
+        GameManager.instance.getActiveMenu();
+        
         
     }
 
