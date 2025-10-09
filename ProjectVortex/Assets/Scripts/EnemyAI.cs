@@ -91,7 +91,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         agent.stoppingDistance = 0;
         return false;
-
     }
 
     void faceTarget()
