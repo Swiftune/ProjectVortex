@@ -109,4 +109,9 @@ public class GameManager : MonoBehaviour
     {
         return menuActive;
     }
+
+    public void setActiveMenu(GameObject newMenu)
+    {
+        menuActive = newMenu;
+    }
 }
