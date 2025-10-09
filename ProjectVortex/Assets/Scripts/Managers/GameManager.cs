@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuMain;
     [SerializeField] Slider slider;
 
     public GameObject player;
@@ -95,5 +96,12 @@ public class GameManager : MonoBehaviour
             slider.minValue = 0;
         }
         slider.value = playerScript.GetHP();
+    }
+
+    public void stateMain()
+    {
+        menuActive = menuMain;
+        menuActive.SetActive(true);
+        statePause();
     }
 }
