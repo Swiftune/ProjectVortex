@@ -7,14 +7,14 @@ public class ButtonFunction : MonoBehaviour
 
     public void startGame()
     {
-        SceneManager.LoadScene("Nigel"); 
+        SceneManager.LoadScene("Nigel", LoadSceneMode.Single); 
+        Time.timeScale = 1.0f;
     }
 
     public void getMainMenu()
     {
-        GameManager.instance.getActiveMenu();
-        
-        
+        GameManager.instance.stateUnpause(); 
+        GameManager.instance.stateMain(); 
     }
 
     public void resume()
