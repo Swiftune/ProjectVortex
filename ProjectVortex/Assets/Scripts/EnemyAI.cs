@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
+    [SerializeField] Animator animate;
 
     Material mat;
     Color colorOrig;
@@ -40,6 +41,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
+        }
+        if(roamTimer != 0)
+        {
+            still();
+        }
+        else
+        {
+            run();
         }
         if (playerInRange && !canSeePlayer())
         {
@@ -113,6 +122,10 @@ public class EnemyAI : MonoBehaviour, IDamage
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
                 }
+                if(agent.velocity == Vector3.zero)
+                {
+                    shootAnim();
+                }
                 return true;
             }
         }
@@ -163,5 +176,18 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
+    }
+
+    void still()
+    {
+        animate.SetTrigger("Stop");
+    }
+    void run()
+    {
+        animate.SetTrigger("Run");
+    }
+    void shootAnim()
+    {
+        animate.SetTrigger("Shoot");
     }
 }

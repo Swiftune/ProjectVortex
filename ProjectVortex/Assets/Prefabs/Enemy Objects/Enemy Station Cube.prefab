@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -1452735671772660765}
   - component: {fileID: -1233470894112678498}
   - component: {fileID: -7270775968544171491}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Station Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
