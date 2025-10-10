@@ -156,7 +156,14 @@ public class EnemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+
+        // grabs player position
+        Vector3 playerPos = GameManager.instance.player.transform.position;
+        // finds the direction from the gun to the player
+        Vector3 aimDir = (playerPos - shootPos.position).normalized;
+
+        // Spawns the bullet and rotates to point at the player
+        Instantiate(bullet, shootPos.position, Quaternion.LookRotation(aimDir, Vector3.up));
     }
     public void takeDamage(int amount)
     {
