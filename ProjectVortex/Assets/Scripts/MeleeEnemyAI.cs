@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
-
-public class EnemyAI : MonoBehaviour, IDamage
+public class MeleeEnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
@@ -12,14 +11,13 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
-    [SerializeField] Transform shootPos;
-    [SerializeField] GameObject bullet;
-    [SerializeField] float shootRate;
+    [SerializeField] GameObject weapon;
+    [SerializeField] float attackRate;
     [SerializeField] Animator animate;
 
     Material mat;
     Color colorOrig;
-    float shootTimer;
+    float attackTimer;
     float roamTimer;
     float angleToPlayer;
     float stoppingDistOrg;
@@ -37,12 +35,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        shootTimer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
         if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
         }
-        if(roamTimer != 0)
+        if (roamTimer != 0)
         {
             still();
         }
@@ -76,7 +74,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
 
         // set the material
-        if (mat ==  null)
+        if (mat == null)
         {
             mat = model.material;
             colorOrig = mat.color;
@@ -104,7 +102,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     bool canSeePlayer()
     {
-        playerDir = GameManager.instance.player.transform.position - headPos.position;
+        Vector3 playersHere = GameManager.instance.player.transform.position - headPos.position;
+        playerDir = playersHere;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
@@ -113,18 +112,14 @@ public class EnemyAI : MonoBehaviour, IDamage
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
-                if (shootTimer > shootRate)
-                {
-                    shoot();
-                }
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                }
-                if(agent.velocity == Vector3.zero)
-                {
-                    shootAnim();
+                    if (attackTimer > attackRate)
+                    {
+                        attack();
+                    }
                 }
                 return true;
             }
@@ -153,17 +148,9 @@ public class EnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    void shoot()
+    void attack()
     {
-        shootTimer = 0;
-
-        // grabs player position
-        Vector3 playerPos = GameManager.instance.player.transform.position;
-        // finds the direction from the gun to the player
-        Vector3 aimDir = (playerPos - shootPos.position).normalized;
-
-        // Spawns the bullet and rotates to point at the player
-        Instantiate(bullet, shootPos.position, Quaternion.LookRotation(aimDir, Vector3.up));
+        attackAnim();
     }
     public void takeDamage(int amount)
     {
@@ -193,8 +180,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         animate.SetTrigger("Run");
     }
-    void shootAnim()
+    void attackAnim()
     {
-        animate.SetTrigger("Shoot");
+        animate.SetTrigger("Swing");
     }
 }
