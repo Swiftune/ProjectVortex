@@ -104,8 +104,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     bool canSeePlayer()
     {
-        Vector3 playersHere = GameManager.instance.player.transform.position - headPos.position;
-        playerDir = playersHere;
+        playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
@@ -121,6 +120,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
+
                     agent.stoppingDistance = stoppingDistOrg;
                 }
                 return true;

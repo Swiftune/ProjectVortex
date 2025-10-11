@@ -102,8 +102,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     }
     bool canSeePlayer()
     {
-        Vector3 playersHere = GameManager.instance.player.transform.position - headPos.position;
-        playerDir = playersHere;
+        playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
@@ -111,14 +110,19 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         {
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
+                run();
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                    if (attackTimer > attackRate)
+                    if(agent.stoppingDistance == stoppingDistOrg)
                     {
-                        attack();
+                        still();
+                        if (attackTimer > attackRate)
+                        {
+                            attack();
+                        }
                     }
                 }
                 return true;
