@@ -18552,6 +18552,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8188378043124679252, guid: 6441a67b28a955948a1f951871eaea0a, type: 3}
+      propertyPath: shootEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188378043124679252, guid: 6441a67b28a955948a1f951871eaea0a, type: 3}
       propertyPath: healthRegenRate
       value: 1
       objectReference: {fileID: 0}
@@ -21187,6 +21191,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1079858349887366259, guid: 4f152e1855699974596deb6964b5aa86, type: 3}
+      propertyPath: roamPauseTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6271461031859861311, guid: 4f152e1855699974596deb6964b5aa86, type: 3}
       propertyPath: m_Name
       value: Assault
@@ -22825,6 +22833,10 @@ PrefabInstance:
     - target: {fileID: 232870089286489114, guid: 4f152e1855699974596deb6964b5aa86, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079858349887366259, guid: 4f152e1855699974596deb6964b5aa86, type: 3}
+      propertyPath: roamPauseTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6271461031859861311, guid: 4f152e1855699974596deb6964b5aa86, type: 3}
       propertyPath: m_Name
