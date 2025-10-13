@@ -143,7 +143,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
-
                     agent.stoppingDistance = stoppingDistOrg;
                 }
                 return true;
@@ -155,8 +154,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, 0));
+        pelvisPos.transform.rotation = Quaternion.Lerp(pelvisPos.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
