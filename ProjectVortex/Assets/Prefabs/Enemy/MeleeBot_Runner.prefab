@@ -1953,6 +1953,7 @@ MonoBehaviour:
   type: 1
   rb: {fileID: 4935435924837928463}
   damageAmount: 3
+  knockBackAmount: 5
   damageRate: 1
   speed: 0
   destroyTime: 0
