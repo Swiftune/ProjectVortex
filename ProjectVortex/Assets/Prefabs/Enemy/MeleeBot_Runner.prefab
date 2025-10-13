@@ -1039,7 +1039,7 @@ NavMeshAgent:
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 2.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -1953,6 +1953,7 @@ MonoBehaviour:
   type: 1
   rb: {fileID: 4935435924837928463}
   damageAmount: 3
+  knockBackAmount: 5
   damageRate: 1
   speed: 0
   destroyTime: 0
