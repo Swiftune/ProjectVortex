@@ -188,7 +188,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         shootTimer3 = 0;
 
     }
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
         agent.SetDestination(GameManager.instance.player.transform.position);

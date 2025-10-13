@@ -1933,7 +1933,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2030375422}
   - {fileID: 1624065427}
   m_Father: {fileID: 782203905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4743,6 +4742,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 28551031}
+  - {fileID: 2030375422}
   m_Father: {fileID: 782203905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &420280214
@@ -4760,7 +4760,7 @@ MonoBehaviour:
   doorExit: {fileID: 1401295406}
   doorEnter: {fileID: 0}
   enemies:
-  - {fileID: 0}
+  - {fileID: 2030375421}
   triggerArea: {fileID: 420280215}
 --- !u!65 &420280215
 BoxCollider:
@@ -13087,15 +13087,23 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 173112794}
+    m_TransformParent: {fileID: 420280213}
     m_Modifications:
+    - target: {fileID: 2476884960339309042, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476884960339309042, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4067181619481497305, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
       propertyPath: m_Name
       value: MeleeBot_Runner
       objectReference: {fileID: 0}
     - target: {fileID: 4197335979955970358, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.602303
+      value: -9.602303
       objectReference: {fileID: 0}
     - target: {fileID: 4197335979955970358, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
       propertyPath: m_LocalPosition.y
