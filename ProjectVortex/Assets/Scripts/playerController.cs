@@ -18,12 +18,14 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    [SerializeField] float knockBackTime;
 
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
 
     Vector3 moveDir;
     Vector3 playerVel;
+    public Vector3 knockBack;
 
     int jumpCount;
     float HPOrig;
@@ -70,6 +72,8 @@ public class playerController : MonoBehaviour, IDamage
 
     void movement()
     {
+        knockBack = Vector3.Lerp(knockBack, Vector3.zero, Time.deltaTime * knockBackTime);
+
         if (controller.isGrounded)
         {
             if (playerVel.y < 0)
@@ -83,7 +87,7 @@ public class playerController : MonoBehaviour, IDamage
 
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
 
-        Vector3 finalMove = moveDir * speed + playerVel;
+        Vector3 finalMove = (moveDir + knockBack) * speed + playerVel;
         controller.Move(finalMove * Time.deltaTime);
     }
 
@@ -155,5 +159,10 @@ public class playerController : MonoBehaviour, IDamage
     public float GetHPOrig()
     {
         return HPOrig;
+    }
+
+    public void applyKnockBack(Vector3 direction)
+    {
+        knockBack = direction;
     }
 }
