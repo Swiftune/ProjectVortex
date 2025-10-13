@@ -78,8 +78,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
-            if (knockBack.y < 0)
-                knockBack.y = 0;
+            knockBack.y = 0;
             jumpCount = 0;
         }
         else
