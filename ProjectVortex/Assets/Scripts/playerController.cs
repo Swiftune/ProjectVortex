@@ -6,7 +6,9 @@ public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
+    [SerializeField] float healthRegenThreshold;
+    [SerializeField] float healthRegenRate;
     [SerializeField] float speed;
     [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
@@ -24,11 +26,14 @@ public class playerController : MonoBehaviour, IDamage
     Vector3 playerVel;
 
     int jumpCount;
-    int HPOrig;
+    float HPOrig;
 
     float shootTimer;
 
     public bool shootEnabled;
+    float healthRegenTimer;
+    float damageTimer;
+
 
     void Start()
     {
@@ -38,10 +43,29 @@ public class playerController : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
+        damageTimer += Time.deltaTime;
+        if (damageTimer > healthRegenThreshold)
+        {
+            healthRegenTimer += Time.deltaTime;
+        }
 
+        regenHealth();
         movement();
         ShootEvent();
         sprint();
+    }
+
+    void regenHealth()
+    {
+        if (healthRegenTimer > healthRegenThreshold)
+        {
+            HP += healthRegenRate * Time.deltaTime;
+            if (HP > HPOrig)
+            {
+                HP = HPOrig;
+                healthRegenTimer = 0;
+            }
+        }
     }
 
     void movement()
@@ -105,6 +129,7 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        damageTimer = 0;
 
         if (HP <= 0)
         {
@@ -122,12 +147,12 @@ public class playerController : MonoBehaviour, IDamage
         return gravity;
     }
 
-    public int GetHP()
+    public float GetHP()
     {
         return HP;
     }
 
-    public int GetHPOrig()
+    public float GetHPOrig()
     {
         return HPOrig;
     }
