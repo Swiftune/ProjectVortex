@@ -13097,6 +13097,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2476884960339309042, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
+      propertyPath: knockBackAmount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4067181619481497305, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
       propertyPath: m_Name
       value: MeleeBot_Runner
