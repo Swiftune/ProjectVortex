@@ -102,7 +102,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         attackTimer = 0;
         attackAnim();
     }
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
         if (HP <= 0)

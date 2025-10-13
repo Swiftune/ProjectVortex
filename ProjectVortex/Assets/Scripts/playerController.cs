@@ -130,8 +130,10 @@ public class playerController : MonoBehaviour, IDamage
         newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 direction)
     {
+        applyKnockBack(direction);
+
         HP -= amount;
         damageTimer = 0;
 
