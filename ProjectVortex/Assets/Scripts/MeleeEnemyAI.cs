@@ -8,9 +8,6 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform headPos;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
-    [SerializeField] int FOV;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
     [SerializeField] GameObject weapon;
     [SerializeField] float attackRate;
     [SerializeField] Animator animate;
@@ -18,46 +15,34 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     Material mat;
     Color colorOrig;
     float attackTimer;
-    float roamTimer;
+    float movingToPlayer;
     float angleToPlayer;
-    float stoppingDistOrg;
-    bool playerInRange;
+    int FOV = 360;
     Vector3 playerDir;
-    Vector3 startingPos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         EnsureMat();
-        stoppingDistOrg = agent.stoppingDistance;
-        startingPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         attackTimer += Time.deltaTime;
-        if (agent.remainingDistance < 0.01f)
+        movingToPlayer += Time.deltaTime;
+        if (RushPlayer())
         {
-            roamTimer += Time.deltaTime;
+
         }
-        if (roamTimer != 0)
-        {
-            still();
-        }
-        else
+        if(movingToPlayer != 0)
         {
             run();
         }
-        if (playerInRange && !canSeePlayer())
+        else
         {
-            checkRoam();
-        }
-        else if (!playerInRange)
-        {
-            checkRoam();
+            still();
         }
     }
-
     bool EnsureMat()
     {
         // if the model is missing or is not on the scene, find on the enemy
@@ -82,25 +67,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
 
         return true;
     }
-
-    void checkRoam()
-    {
-        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
-        {
-            roam();
-        }
-    }
-    void roam()
-    {
-        roamTimer = 0;
-        agent.stoppingDistance = 0;
-        Vector3 ranPos = Random.insideUnitSphere * roamDist;
-        ranPos += startingPos;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
-        agent.SetDestination(hit.position);
-    }
-    bool canSeePlayer()
+    bool RushPlayer()
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
@@ -110,56 +77,34 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         {
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
-                run();
+                faceTarget();
                 agent.SetDestination(GameManager.instance.player.transform.position);
-                if (agent.remainingDistance <= stoppingDistOrg)
-                {
-                    faceTarget();
-                    agent.stoppingDistance = stoppingDistOrg;
-                    if(agent.stoppingDistance == stoppingDistOrg)
-                    {
-                        still();
-                        if (attackTimer > attackRate)
-                        {
-                            attack();
-                        }
-                    }
-                }
-                return true;
             }
+            if(agent.remainingDistance <= agent.stoppingDistance)
+            {
+                movingToPlayer = 0;
+                if (attackTimer >= attackRate)
+                {
+                    attack();
+                }
+            }
+            return true;
         }
         return false;
-
     }
-
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            agent.stoppingDistance = 0;
-        }
-    }
     void attack()
     {
+        attackTimer = 0;
         attackAnim();
     }
     public void takeDamage(int amount)
     {
         HP -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
         {
             Destroy(gameObject);
