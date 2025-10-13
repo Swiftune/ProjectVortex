@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Damage : MonoBehaviour
 {
@@ -49,7 +50,9 @@ private void OnTriggerEnter(Collider other)
 
         if (dmg != null && (type == damageType.moving || type == damageType.stationary || type == damageType.homing))
         {
-            dmg.takeDamage(damageAmount, (other.transform.position - transform.position).normalized * knockBackAmount);
+            Vector3 pushBack = (other.transform.position - transform.position).normalized;
+            pushBack.y = -pushBack.y;
+            dmg.takeDamage(damageAmount, (pushBack * knockBackAmount));
         }
 
         if (type == damageType.homing || type == damageType.moving)
