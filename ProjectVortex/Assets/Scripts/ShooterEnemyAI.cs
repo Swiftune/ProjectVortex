@@ -11,7 +11,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
+    [SerializeField] float roamPauseTime;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -104,8 +104,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     bool canSeePlayer()
     {
-        Vector3 playersHere = GameManager.instance.player.transform.position - headPos.position;
-        playerDir = playersHere;
+        playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
@@ -121,6 +120,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
+
                     agent.stoppingDistance = stoppingDistOrg;
                 }
                 return true;
@@ -154,14 +154,9 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     {
         shootTimer = 0;
 
-        // grabs player position
-        Vector3 playerPos = GameManager.instance.player.transform.position;
-        // finds the direction from the gun to the player
-        Vector3 aimDir = (playerPos - shootPos.position).normalized;
-
-        // Spawns the bullet and rotates to point at the player
-        Instantiate(bullet, shootPos.position, Quaternion.LookRotation(aimDir, Vector3.up));
+        Instantiate(bullet, shootPos.position, transform.rotation);
     }
+
     public void takeDamage(int amount)
     {
         HP -= amount;
