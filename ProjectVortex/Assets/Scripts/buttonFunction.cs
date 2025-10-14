@@ -7,13 +7,12 @@ public class ButtonFunction : MonoBehaviour
 
     public void startGame()
     {
-        GameManager.instance.stateUnpause();
+        SceneManager.LoadScene("Nigel");
     }
 
     public void getMainMenu()
     {
-        GameManager.instance.stateUnpause(); 
-        GameManager.instance.stateMain(); 
+        SceneManager.LoadScene("startMenu"); 
     }
 
     public void resume()
