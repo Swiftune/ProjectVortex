@@ -7,22 +7,16 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
-    [SerializeField] Transform pelvisPos;
+    [SerializeField] Transform bodyRot;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
     [SerializeField] int sprintSpeed;
-    [SerializeField] Transform shootPos1;
-    [SerializeField] Transform shootPos2;
-    [SerializeField] Transform shootPos3;
-    [SerializeField] Transform shootPos4;
-    [SerializeField] Transform shootPos5;
-    [SerializeField] Transform shootPos6;
-    [SerializeField] Transform shootPos7;
-    [SerializeField] Transform shootPos8;
-    [SerializeField] Transform shootPos9;
+    [SerializeField] Transform[] cannons;
+    [SerializeField] Transform[] machineGuns;
+    [SerializeField] Transform mortar;
     [SerializeField] GameObject cannonRound;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject explosiveShell;
@@ -42,9 +36,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
+    Quaternion defaultRot;
     float speedOrig;
-    Transform[] bigCannons = new Transform [4];
-    Transform[] machineGuns = new Transform[4];
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -52,14 +45,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
         speedOrig = agent.speed;
-        bigCannons[0] = shootPos1;
-        bigCannons[1] = shootPos2;
-        bigCannons[2] = shootPos3;
-        bigCannons[3] = shootPos4;
-        machineGuns[0] = shootPos5;
-        machineGuns[1] = shootPos6;
-        machineGuns[2] = shootPos7;
-        machineGuns[3] = shootPos8;
+        defaultRot = bodyRot.transform.rotation;
     }
 
     // Update is called once per frame
@@ -82,6 +68,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
         if (playerInRange && !canSeePlayer())
         {
+            bodyRot.transform.rotation = defaultRot;
             checkRoam();
         }
         else if (!playerInRange)
@@ -187,8 +174,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z - 90));
-        pelvisPos.transform.rotation = Quaternion.Lerp(pelvisPos.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, -playerDir.y, -playerDir.z));
+        bodyRot.transform.rotation = Quaternion.Lerp(bodyRot.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -208,15 +195,25 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void fireCannons()
     {
         shootTimer1 = 0;
+        for(int i = 0; i < cannons.Length; i++)
+        {
+            Instantiate(cannonRound, cannons[i].position, cannons[i].rotation);
+        }
+
     }
     void fireMachineGuns()
     {
         shootTimer2 = 0;
+        for (int i = 0; i < machineGuns.Length; i++)
+        {
+            Instantiate(cannonRound, machineGuns[i].position, machineGuns[i].rotation);
+        }
 
     }
     void fireMortar()
     {
         shootTimer3 = 0;
+        Instantiate(explosiveShell, mortar.position, mortar.rotation);
 
     }
     public void takeDamage(int amount, Vector3 direction)

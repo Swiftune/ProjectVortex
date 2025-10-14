@@ -54,7 +54,7 @@ MonoBehaviour:
   damageAmount: 10
   knockBackAmount: 5
   damageRate: 0
-  speed: 10
+  speed: 20
   destroyTime: 5
 --- !u!33 &6793933591548941710
 MeshFilter:
@@ -155,7 +155,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

@@ -7,6 +7,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] int HP;
+    [SerializeField] int FOV;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] GameObject weapon;
     [SerializeField] float attackRate;
@@ -17,7 +18,6 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     float attackTimer;
     float movingToPlayer;
     float angleToPlayer;
-    int FOV = 360;
     Vector3 playerDir;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
