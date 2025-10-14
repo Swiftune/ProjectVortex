@@ -42,6 +42,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
+    float speedOrig;
     Transform[] bigCannons = new Transform [4];
     Transform[] machineGuns = new Transform[4];
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,6 +51,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         EnsureMat();
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
+        speedOrig = agent.speed;
         bigCannons[0] = shootPos1;
         bigCannons[1] = shootPos2;
         bigCannons[2] = shootPos3;
@@ -72,7 +74,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
         if (roamTimer != 0)
         {
-            walk();
+            run();
         }
         else
         {
@@ -170,7 +172,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 }
                 else
                 {
-                    if(shootTimer3 > mortarRate)
+                    if (shootTimer3 > mortarRate)
                     {
                         fireMortar();
                         shootTimer3 = 0;
@@ -225,6 +227,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
         {
+            StartCoroutine(pauseForDeath());
             Destroy(gameObject);
         }
         else
@@ -238,6 +241,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
+    IEnumerator pauseForDeath()
+    {
+        yield return new WaitForSeconds(4.4f);
+    }
 
     void still()
     {
@@ -245,12 +252,13 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     void run()
     {
+        agent.speed = sprintSpeed;
         animate.SetTrigger("Run");
-        agent.speed *= sprintSpeed;
     }
 
     void walk()
     {
+        agent.speed = speedOrig;
         animate.SetTrigger("Walk");
     }
     bool runToPos()

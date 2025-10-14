@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class ShooterEnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
+    [SerializeField] Renderer[] model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] int HP;
@@ -12,6 +12,8 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] float roamPauseTime;
+    [SerializeField] float sprintSpeed;
+    [SerializeField] float timeTillPush;
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -21,8 +23,10 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     Color colorOrig;
     float shootTimer;
     float roamTimer;
+    float pushTimer;
     float angleToPlayer;
     float stoppingDistOrg;
+    float speedOrig;
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
@@ -32,6 +36,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         EnsureMat();
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
+        speedOrig = agent.speed;    
     }
 
     // Update is called once per frame
@@ -48,7 +53,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         }
         else
         {
-            run();
+            walk();
         }
         if (playerInRange && !canSeePlayer())
         {
@@ -58,30 +63,35 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             checkRoam();
         }
+        if (playerInRange && canSeePlayer())
+        {
+            run();
+        }
     }
 
     bool EnsureMat()
     {
         // if the model is missing or is not on the scene, find on the enemy
-        if (model == null || !model.gameObject.scene.IsValid())
+        for(int i = 0; i < model.Length; i++)
         {
-            // finds the enemy render
-            model = GetComponentInChildren<Renderer>(true);
-        }
+            if (model[i] == null || !model[i].gameObject.scene.IsValid())
+            {
+                // finds the enemy render
+                model[i] = GetComponentInChildren<Renderer>(true);
+            }
 
-        // Bail if can't find the model
-        if (model == null)
-        {
-            return false;
+            // Bail if can't find the model
+            if (model[i] == null)
+            {
+                return false;
+            }
+            // set the material
+            if (mat == null)
+            {
+                mat = model[i].material;
+                colorOrig = mat.color;
+            }
         }
-
-        // set the material
-        if (mat ==  null)
-        {
-            mat = model.material;
-            colorOrig = mat.color;
-        }
-
         return true;
     }
 
@@ -120,8 +130,20 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
-
                     agent.stoppingDistance = stoppingDistOrg;
+                }
+                else
+                {
+                    runNgun();
+                }
+                if (agent.remainingDistance == 3)
+                {
+                    pushTimer += Time.deltaTime;
+                    if (pushTimer >= timeTillPush)
+                    {
+                        pushTimer = 0;
+                        melee();
+                    }
                 }
                 return true;
             }
@@ -153,8 +175,15 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        shootAnim();
+    }
+    void runNgun()
+    {
+        animate.SetTrigger("Run Shoot");
+    }
+    void melee()
+    {
+        animate.SetTrigger("Melee");
     }
 
     public void takeDamage(int amount, Vector3 direction)
@@ -172,9 +201,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
+        for (int i = 0; i < model.Length; i++)
+        {
+            model[i].material.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            model[i].material.color = colorOrig;
+        }
     }
 
     void still()
@@ -184,6 +216,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     void run()
     {
         animate.SetTrigger("Run");
+        agent.speed = sprintSpeed;
+    }
+     void walk()
+    {
+        animate.SetTrigger("Walk");
+        agent.speed = speedOrig;
     }
     void shootAnim()
     {

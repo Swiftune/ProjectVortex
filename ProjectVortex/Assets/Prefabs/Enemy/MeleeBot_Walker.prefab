@@ -284,7 +284,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 2.5
-  m_Acceleration: 5
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 2.5
@@ -429,6 +429,7 @@ MonoBehaviour:
   type: 1
   rb: {fileID: 4424682749039583843}
   damageAmount: 3
+  knockBackAmount: 0
   damageRate: 1
   speed: 0
   destroyTime: 0
