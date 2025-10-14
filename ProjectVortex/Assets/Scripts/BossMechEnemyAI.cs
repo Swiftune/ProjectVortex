@@ -13,6 +13,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
+    [SerializeField] int sprintSpeed;
     [SerializeField] Transform shootPos1;
     [SerializeField] Transform shootPos2;
     [SerializeField] Transform shootPos3;
@@ -71,11 +72,11 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
         if (roamTimer != 0)
         {
-            still();
+            walk();
         }
         else
         {
-            run();
+            still();
         }
         if (playerInRange && !canSeePlayer())
         {
@@ -84,6 +85,17 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         else if (!playerInRange)
         {
             checkRoam();
+        }
+        if (canSeePlayer())
+        {
+            if (runToPos())
+            {
+                run();
+            }
+            else
+            {
+                walk();
+            }
         }
     }
 
@@ -144,6 +156,25 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
+                    if(shootTimer2 > gunRate)
+                    {
+                        fireMachineGuns();
+                        shootTimer2 = 0;
+                        shootTimer1 = cannonRate - 5;
+                    }
+                    if(shootTimer1 > cannonRate)
+                    {
+                        fireCannons();
+                        shootTimer1 = 0;
+                    }
+                }
+                else
+                {
+                    if(shootTimer3 > mortarRate)
+                    {
+                        fireMortar();
+                        shootTimer3 = 0;
+                    }
                 }
                 return true;
             }
@@ -154,8 +185,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, 0));
-        pelvisPos.transform.rotation = Quaternion.Lerp(pelvisPos.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -175,11 +206,12 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void fireCannons()
     {
         shootTimer1 = 0;
-
+        animate.SetTrigger("Shoot Cannons");
     }
     void fireMachineGuns()
     {
         shootTimer2 = 0;
+        animate.SetTrigger("Shoot MGs");
 
     }
     void fireMortar()
@@ -214,9 +246,19 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void run()
     {
         animate.SetTrigger("Run");
+        agent.speed *= sprintSpeed;
     }
-    void shootAnim()
+
+    void walk()
     {
-        animate.SetTrigger("Shoot");
+        animate.SetTrigger("Walk");
+    }
+    bool runToPos()
+    {
+        if (agent.remainingDistance > stoppingDistOrg + 8)
+        {
+            return true;
+        }
+        return false;
     }
 }
