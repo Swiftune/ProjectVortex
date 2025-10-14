@@ -130,6 +130,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
+                    still();
                     agent.stoppingDistance = stoppingDistOrg;
                 }
                 else
