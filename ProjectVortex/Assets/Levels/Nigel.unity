@@ -2028,8 +2028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
   doorExit: {fileID: 1203898148}
   doorEnter: {fileID: 178110341}
-  enemies:
-  - {fileID: 0}
+  enemies: []
   triggerArea: {fileID: 173112795}
 --- !u!1001 &176555340
 PrefabInstance:

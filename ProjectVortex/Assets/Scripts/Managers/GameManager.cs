@@ -101,11 +101,15 @@ public class GameManager : MonoBehaviour
 
     public void stateMain()
     {
-        menuActive = menuMain;
-        menuActive.SetActive(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        statePause();
+        if (menuMain != null)
+        {
+            menuActive = menuMain;
+            menuActive.SetActive(true);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            statePause();
+        }
     }
 
     public GameObject getActiveMenu()
