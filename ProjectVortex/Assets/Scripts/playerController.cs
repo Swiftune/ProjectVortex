@@ -15,9 +15,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
 
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    [SerializeField] float bulletSpread;
+    [SerializeField] float bulletCount;
     [SerializeField] float knockBackTime;
 
     [SerializeField] GameObject bullet;
@@ -127,8 +127,14 @@ public class playerController : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
-        newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
+        for (int i = 0; i < bulletCount; i++)
+        {
+            Vector3 shootDir = shootPos.forward;
+            shootDir.x = Random.Range(shootDir.x - bulletSpread, shootDir.x + bulletSpread);
+            shootDir.y = Random.Range(shootDir.y  - bulletSpread, shootDir.y + bulletSpread);
+            shootDir.z = Random.Range(shootDir.z - bulletSpread, shootDir.z + bulletSpread);
+            GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.LookRotation(shootDir));
+        }
     }
 
     public void takeDamage(int amount, Vector3 direction)
