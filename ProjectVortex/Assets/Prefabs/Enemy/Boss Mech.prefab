@@ -92,9 +92,9 @@ MonoBehaviour:
   shootPos7: {fileID: 1796328851106883521}
   shootPos8: {fileID: 1796328851106883521}
   shootPos9: {fileID: 2980739353208028546}
-  cannonRound: {fileID: 0}
-  bullet: {fileID: 0}
-  explosiveShell: {fileID: 0}
+  cannonRound: {fileID: 2594676880397203251, guid: 6727c1d8dfc190d439677072bbcfc9e2, type: 3}
+  bullet: {fileID: 2594676880397203251, guid: 6ed1b4659e4ef4746a3617aada659dc8, type: 3}
+  explosiveShell: {fileID: 2594676880397203251, guid: 2609d2959b7170144ba7addca5e7e0e4, type: 3}
   cannonRate: 0
   gunRate: 0
   mortarRate: 0
