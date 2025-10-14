@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = timeScaleOrig;
-        stateMain();
     }
 
     // Update is called once per frame
