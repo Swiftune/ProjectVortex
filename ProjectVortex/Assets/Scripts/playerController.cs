@@ -6,7 +6,9 @@ public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
 
-    [SerializeField] int HP;
+    [SerializeField] float HP;
+    [SerializeField] float healthRegenThreshold;
+    [SerializeField] float healthRegenRate;
     [SerializeField] float speed;
     [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
@@ -16,19 +18,23 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    [SerializeField] float knockBackTime;
 
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
 
     Vector3 moveDir;
     Vector3 playerVel;
+    public Vector3 knockBack;
 
     int jumpCount;
-    int HPOrig;
+    float HPOrig;
 
     float shootTimer;
 
     public bool shootEnabled;
+    float healthRegenTimer;
+
 
     void Start()
     {
@@ -38,18 +44,41 @@ public class playerController : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
+        healthRegenTimer += Time.deltaTime;
+       
 
+        regenHealth();
         movement();
         ShootEvent();
         sprint();
     }
 
+    void regenHealth()
+    {
+        if (healthRegenTimer > healthRegenThreshold)
+        {
+            HP += healthRegenRate * Time.deltaTime;
+            if (HP > HPOrig)
+            {
+                HP = HPOrig;
+                healthRegenTimer = 0;
+            }
+        }
+    }
+
     void movement()
     {
+        knockBack = Vector3.Lerp(knockBack, Vector3.zero, Time.deltaTime * knockBackTime);
+        knockBack.x = Mathf.Abs(knockBack.x) < 0.01f ? 0 : knockBack.x;
+        knockBack.y = Mathf.Abs(knockBack.y) < 0.01f ? 0 : knockBack.y;
+        knockBack.z = Mathf.Abs(knockBack.z) < 0.01f ? 0 : knockBack.z;
+
+
         if (controller.isGrounded)
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
+            knockBack.y = 0;
             jumpCount = 0;
         }
         else
@@ -59,7 +88,7 @@ public class playerController : MonoBehaviour, IDamage
 
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
 
-        Vector3 finalMove = moveDir * speed + playerVel;
+        Vector3 finalMove = (moveDir + knockBack) * speed + playerVel;
         controller.Move(finalMove * Time.deltaTime);
     }
 
@@ -102,9 +131,12 @@ public class playerController : MonoBehaviour, IDamage
         newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 direction)
     {
+        applyKnockBack(direction);
+
         HP -= amount;
+        healthRegenTimer = 0;
 
         if (HP <= 0)
         {
@@ -122,13 +154,18 @@ public class playerController : MonoBehaviour, IDamage
         return gravity;
     }
 
-    public int GetHP()
+    public float GetHP()
     {
         return HP;
     }
 
-    public int GetHPOrig()
+    public float GetHPOrig()
     {
         return HPOrig;
+    }
+
+    public void applyKnockBack(Vector3 direction)
+    {
+        knockBack = direction;
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Damage : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Damage : MonoBehaviour
     [SerializeField] Rigidbody rb;
 
     [SerializeField] int damageAmount;
+    [SerializeField] float knockBackAmount;
     [SerializeField] float damageRate;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
@@ -48,7 +50,9 @@ private void OnTriggerEnter(Collider other)
 
         if (dmg != null && (type == damageType.moving || type == damageType.stationary || type == damageType.homing))
         {
-            dmg.takeDamage(damageAmount);
+            Vector3 pushBack = (other.transform.position - transform.position).normalized;
+            pushBack.y = -pushBack.y;
+            dmg.takeDamage(damageAmount, (pushBack * knockBackAmount));
         }
 
         if (type == damageType.homing || type == damageType.moving)
@@ -78,7 +82,7 @@ private void OnTriggerEnter(Collider other)
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
-        d.takeDamage(damageAmount);
+        d.takeDamage(damageAmount, Vector3.zero);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
     }

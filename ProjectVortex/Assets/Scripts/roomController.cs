@@ -26,7 +26,6 @@ public class RoomController : MonoBehaviour
         // Start with both doors unlocked
         SetDoorsLocked(false);
 
-        // This room contributes to total win condition (once player activates it)
     }
 
     void Update()
