@@ -171,10 +171,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6927173197942394131, guid: 6756c732934d7f04183ef8e958059d53, type: 3}
-      propertyPath: m_StoppingDistance
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14848,11 +14844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomController
   doorExit: {fileID: 0}
   doorEnter: {fileID: 1486185563}
-  enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  enemies: []
   triggerArea: {fileID: 1339242274}
 --- !u!1 &1339273155 stripped
 GameObject:
@@ -23631,6 +23623,22 @@ PrefabInstance:
     - target: {fileID: 3318220123617443667, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
+    - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: bulletCount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: bulletSpread
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: jumpCountMax
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: knockBackTime
