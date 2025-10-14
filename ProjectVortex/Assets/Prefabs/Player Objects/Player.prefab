@@ -114,8 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::playerController
   controller: {fileID: 4228449030356161153}
   HP: 5
-  healthRegenThreshold: 0
-  healthRegenRate: 0
+  healthRegenThreshold: 5
+  healthRegenRate: 1
   speed: 10
   sprintMod: 1.5
   jumpSpeed: 15
@@ -124,7 +124,7 @@ MonoBehaviour:
   shootDamage: 0
   shootDist: 0
   shootRate: 0.5
-  knockBackTime: 1
+  knockBackTime: 5
   bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
   shootPos: {fileID: 5856671837762262144}
   knockBack: {x: 0, y: 0, z: 0}
