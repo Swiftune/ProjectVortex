@@ -34,7 +34,6 @@ public class playerController : MonoBehaviour, IDamage
 
     public bool shootEnabled;
     float healthRegenTimer;
-    float damageTimer;
 
 
     void Start()
@@ -45,11 +44,8 @@ public class playerController : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-        damageTimer += Time.deltaTime;
-        if (damageTimer > healthRegenThreshold)
-        {
-            healthRegenTimer += Time.deltaTime;
-        }
+        healthRegenTimer += Time.deltaTime;
+       
 
         regenHealth();
         movement();
@@ -73,11 +69,16 @@ public class playerController : MonoBehaviour, IDamage
     void movement()
     {
         knockBack = Vector3.Lerp(knockBack, Vector3.zero, Time.deltaTime * knockBackTime);
+        knockBack.x = Mathf.Abs(knockBack.x) < 0.01f ? 0 : knockBack.x;
+        knockBack.y = Mathf.Abs(knockBack.y) < 0.01f ? 0 : knockBack.y;
+        knockBack.z = Mathf.Abs(knockBack.z) < 0.01f ? 0 : knockBack.z;
+
 
         if (controller.isGrounded)
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
+            knockBack.y = 0;
             jumpCount = 0;
         }
         else
@@ -130,10 +131,12 @@ public class playerController : MonoBehaviour, IDamage
         newBullet.transform.rotation = Quaternion.LookRotation(shootPos.forward);
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 direction)
     {
+        applyKnockBack(direction);
+
         HP -= amount;
-        damageTimer = 0;
+        healthRegenTimer = 0;
 
         if (HP <= 0)
         {

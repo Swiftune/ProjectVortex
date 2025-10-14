@@ -157,7 +157,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
         agent.SetDestination(GameManager.instance.player.transform.position);
