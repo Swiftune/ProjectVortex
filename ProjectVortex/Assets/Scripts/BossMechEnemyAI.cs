@@ -187,8 +187,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z - 90));
+        pelvisPos.transform.rotation = Quaternion.Lerp(pelvisPos.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -208,12 +208,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void fireCannons()
     {
         shootTimer1 = 0;
-        animate.SetTrigger("Shoot Cannons");
     }
     void fireMachineGuns()
     {
         shootTimer2 = 0;
-        animate.SetTrigger("Shoot MGs");
 
     }
     void fireMortar()
@@ -227,8 +225,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
         {
-            StartCoroutine(pauseForDeath());
-            Destroy(gameObject);
+            die();
         }
         else
         {
@@ -243,7 +240,9 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator pauseForDeath()
     {
-        yield return new WaitForSeconds(4.4f);
+        animate.SetTrigger("Death");
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 
     void still()
@@ -260,6 +259,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     {
         agent.speed = speedOrig;
         animate.SetTrigger("Walk");
+    }
+    void die()
+    {
+        StartCoroutine(pauseForDeath());
     }
     bool runToPos()
     {
