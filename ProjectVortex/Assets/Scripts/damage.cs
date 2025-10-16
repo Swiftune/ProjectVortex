@@ -51,7 +51,7 @@ private void OnTriggerEnter(Collider other)
         if (dmg != null && (type == damageType.moving || type == damageType.stationary || type == damageType.homing))
         {
             Vector3 pushBack = (other.transform.position - transform.position).normalized;
-            pushBack.y = -pushBack.y;
+            pushBack.y = knockBackAmount / 5;
             dmg.takeDamage(damageAmount, (pushBack * knockBackAmount));
         }
 
