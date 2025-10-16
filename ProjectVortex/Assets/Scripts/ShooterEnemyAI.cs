@@ -14,12 +14,11 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     [SerializeField] float roamPauseTime;
     [SerializeField] float sprintSpeed;
     [SerializeField] float timeTillPush;
-    [SerializeField] Transform shootPos;
+    [SerializeField] Transform[] shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] Animator animate;
 
-    Material mat;
     Color colorOrig;
     float shootTimer;
     float roamTimer;
@@ -33,7 +32,10 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EnsureMat();
+        for (int i = 0; i < model.Length; i++)
+        {
+            colorOrig = model[i].material.color;
+        }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
         speedOrig = agent.speed;    
@@ -47,52 +49,22 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             roamTimer += Time.deltaTime;
         }
-        if(roamTimer != 0)
-        {
-            still();
-        }
-        else
-        {
-            walk();
-        }
         if (playerInRange && !canSeePlayer())
         {
             checkRoam();
+            agent.speed = speedOrig;
+            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
         }
         else if (!playerInRange)
         {
             checkRoam();
+            agent.speed = speedOrig;
+            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
         }
-        if (playerInRange && canSeePlayer())
+        if (runToPos())
         {
-            run();
+            agent.speed = sprintSpeed;
         }
-    }
-
-    bool EnsureMat()
-    {
-        // if the model is missing or is not on the scene, find on the enemy
-        for(int i = 0; i < model.Length; i++)
-        {
-            if (model[i] == null || !model[i].gameObject.scene.IsValid())
-            {
-                // finds the enemy render
-                model[i] = GetComponentInChildren<Renderer>(true);
-            }
-
-            // Bail if can't find the model
-            if (model[i] == null)
-            {
-                return false;
-            }
-            // set the material
-            if (mat == null)
-            {
-                mat = model[i].material;
-                colorOrig = mat.color;
-            }
-        }
-        return true;
     }
 
     void checkRoam()
@@ -125,26 +97,17 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (shootTimer > shootRate)
                 {
-                    shoot();
+                    animate.SetTrigger("Shoot");
                 }
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
-                    still();
                     agent.stoppingDistance = stoppingDistOrg;
                 }
                 else
                 {
-                    runNgun();
-                }
-                if (agent.remainingDistance == 3)
-                {
-                    pushTimer += Time.deltaTime;
-                    if (pushTimer >= timeTillPush)
-                    {
-                        pushTimer = 0;
-                        melee();
-                    }
+                    agent.speed = sprintSpeed;
+                    animate.SetTrigger("Run");
                 }
                 return true;
             }
@@ -173,14 +136,13 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    void shoot()
+    public void shoot()
     {
         shootTimer = 0;
-        shootAnim();
-    }
-    void runNgun()
-    {
-        animate.SetTrigger("Run Shoot");
+        for (int i = 0; i < shootPos.Length; i++)
+        {
+            Instantiate(bullet, shootPos[i].position, shootPos[i].rotation);
+        }
     }
     void melee()
     {
@@ -205,27 +167,19 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         for (int i = 0; i < model.Length; i++)
         {
             model[i].material.color = Color.red;
+        }
+        for (int i = 0; i < model.Length; i++)
+        {
             yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
     }
-
-    void still()
+    bool runToPos()
     {
-        animate.SetTrigger("Stop");
-    }
-    void run()
-    {
-        animate.SetTrigger("Run");
-        agent.speed = sprintSpeed;
-    }
-     void walk()
-    {
-        animate.SetTrigger("Walk");
-        agent.speed = speedOrig;
-    }
-    void shootAnim()
-    {
-        animate.SetTrigger("Shoot");
+        if (agent.remainingDistance > stoppingDistOrg + 1)
+        {
+            return true;
+        }
+        return false;
     }
 }
