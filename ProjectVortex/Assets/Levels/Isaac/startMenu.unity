@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   menuActive: {fileID: 0}
-  menuPause: {fileID: 0}
+  menuPause: {fileID: 2015059871}
   menuLose: {fileID: 0}
   menuWin: {fileID: 0}
   menuMain: {fileID: 2015059871}
