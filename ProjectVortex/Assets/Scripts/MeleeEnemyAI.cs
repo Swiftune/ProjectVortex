@@ -10,6 +10,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] GameObject weapon;
+    [SerializeField] Transform weaponHolder;
     [SerializeField] float attackRate;
     [SerializeField] Animator animate;
 
@@ -62,7 +63,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     }
     public void activateAttack()
     {
-        Instantiate(weapon);
+        Instantiate(weapon, weaponHolder.position, weaponHolder.rotation);
     }
     public void takeDamage(int amount, Vector3 direction)
     {
