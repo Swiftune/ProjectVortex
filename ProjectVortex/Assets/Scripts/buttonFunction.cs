@@ -8,7 +8,8 @@ public class ButtonFunction : MonoBehaviour
     public void startGame()
     {
         SceneManager.LoadScene("Nigel");
-        GameManager.instance.stateUnpause(); 
+        GameManager.instance.stateUnpause();
+        
     }
 
     public void getMainMenu()
@@ -20,7 +21,6 @@ public class ButtonFunction : MonoBehaviour
     public void resume()
     {
         InputManager.Instance.PauseEvent();
-
     }
 
     public void restart()
