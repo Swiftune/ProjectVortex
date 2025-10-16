@@ -955,6 +955,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4197335979955970358}
+  - component: {fileID: -4669607253510034421}
   - component: {fileID: 7798354987605986899}
   - component: {fileID: 8190507668359212038}
   - component: {fileID: 6927173197942394131}
@@ -983,6 +984,19 @@ Transform:
   - {fileID: 1095973336111223238}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -88.622, z: 0}
+--- !u!114 &-4669607253510034421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4067181619481497305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7252c54d0ded929428acfbc7166b8d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::enemyRoomTracker
+  thisRoom: {fileID: 0}
 --- !u!95 &7798354987605986899
 Animator:
   serializedVersion: 7
