@@ -23313,6 +23313,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 782203905}
     m_Modifications:
+    - target: {fileID: 562465983802009380, guid: 40b1c918498ab6640b4cb6fb9938fb90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1429845317728846452, guid: 40b1c918498ab6640b4cb6fb9938fb90, type: 3}
       propertyPath: m_Name
       value: Start Room
@@ -23341,6 +23345,14 @@ PrefabInstance:
       propertyPath: 'enemySpawnPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 1733007990}
+    - target: {fileID: 2050429405619425761, guid: 40b1c918498ab6640b4cb6fb9938fb90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2050429405619425761, guid: 40b1c918498ab6640b4cb6fb9938fb90, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.999953
+      objectReference: {fileID: 0}
     - target: {fileID: 3125277273615033500, guid: 40b1c918498ab6640b4cb6fb9938fb90, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23
