@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.AI;
 public class MeleeEnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
+    [SerializeField] Renderer[] model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] int HP;
@@ -13,7 +13,6 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     [SerializeField] float attackRate;
     [SerializeField] Animator animate;
 
-    Material mat;
     Color colorOrig;
     float attackTimer;
     float movingToPlayer;
@@ -22,7 +21,10 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EnsureMat();
+        for (int i = 0; i < model.Length; i++)
+        {
+            colorOrig = model[i].material.color;
+        }
     }
 
     // Update is called once per frame
@@ -30,10 +32,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     {
         attackTimer += Time.deltaTime;
         movingToPlayer += Time.deltaTime;
-        if (RushPlayer())
-        {
-
-        }
+        RushPlayer();
         if(movingToPlayer != 0)
         {
             run();
@@ -43,43 +42,16 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
             still();
         }
     }
-    bool EnsureMat()
+    void RushPlayer()
     {
-        // if the model is missing or is not on the scene, find on the enemy
-        if (model == null || !model.gameObject.scene.IsValid())
-        {
-            // finds the enemy render
-            model = GetComponentInChildren<Renderer>(true);
-        }
-
-        // Bail if can't find the model
-        if (model == null)
-        {
-            return false;
-        }
-
-        // set the material
-        if (mat == null)
-        {
-            mat = model.material;
-            colorOrig = mat.color;
-        }
-
-        return true;
-    }
-    bool RushPlayer()
-    {
+        faceTarget();
+        agent.SetDestination(GameManager.instance.player.transform.position);
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
-            if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
-            {
-                faceTarget();
-                agent.SetDestination(GameManager.instance.player.transform.position);
-            }
             if(agent.remainingDistance <= agent.stoppingDistance)
             {
                 movingToPlayer = 0;
@@ -88,9 +60,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
                     attack();
                 }
             }
-            return true;
         }
-        return false;
     }
     void faceTarget()
     {
@@ -116,9 +86,15 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
+        for (int i = 0; i < model.Length; i++)
+        {
+            model[i].material.color = Color.red;
+        }
+        for (int i = 0; i < model.Length; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            model[i].material.color = colorOrig;
+        }
     }
 
     void still()
