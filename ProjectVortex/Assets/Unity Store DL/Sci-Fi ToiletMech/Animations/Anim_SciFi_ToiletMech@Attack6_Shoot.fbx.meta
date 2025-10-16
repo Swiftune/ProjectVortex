@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 0215cf1c96134624584d4c1b2dac0f35
+AssetOrigin:
+  serializedVersion: 1
+  productId: 315652
+  packageName: Sci-Fi ToiletMech
+  packageVersion: 1.01
+  assetPath: Assets/Sci-Fi ToiletMech/Animations/Anim_SciFi_ToiletMech@Attack6_Shoot.fbx
+  uploadId: 755620
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -29,7 +36,43 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Attack6_Shoot
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 43
+      lastFrame: 57
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.3905473
+        functionName: shoot
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -56,6 +99,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -105,10 +151,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 315652
-  packageName: Sci-Fi ToiletMech
-  packageVersion: 1.01
-  assetPath: Assets/Sci-Fi ToiletMech/Animations/Anim_SciFi_ToiletMech@Attack6_Shoot.fbx
-  uploadId: 755620

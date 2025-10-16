@@ -32,15 +32,8 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     {
         attackTimer += Time.deltaTime;
         movingToPlayer += Time.deltaTime;
+        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         RushPlayer();
-        if(movingToPlayer != 0)
-        {
-            run();
-        }
-        else
-        {
-            still();
-        }
     }
     void RushPlayer()
     {
@@ -57,7 +50,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
                 movingToPlayer = 0;
                 if (attackTimer >= attackRate)
                 {
-                    attack();
+                    attackAnim();
                 }
             }
         }
@@ -67,10 +60,9 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
-    void attack()
+    public void activateAttack()
     {
-        attackTimer = 0;
-        attackAnim();
+        Instantiate(weapon);
     }
     public void takeDamage(int amount, Vector3 direction)
     {
@@ -96,17 +88,9 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
             model[i].material.color = colorOrig;
         }
     }
-
-    void still()
-    {
-        animate.SetTrigger("Stop");
-    }
-    void run()
-    {
-        animate.SetTrigger("Run");
-    }
     void attackAnim()
     {
+        attackTimer = 0;
         animate.SetTrigger("Swing");
     }
 }

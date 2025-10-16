@@ -60,33 +60,19 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         {
             roamTimer += Time.deltaTime;
         }
-        if (roamTimer != 0)
-        {
-            run();
-        }
-        else
-        {
-            still();
-        }
         if (playerInRange && !canSeePlayer())
         {
-            bodyRot.transform.rotation = defaultRot;
+            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
             checkRoam();
         }
         else if (!playerInRange)
         {
+            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
             checkRoam();
         }
-        if (canSeePlayer())
+        if (runToPos())
         {
-            if (runToPos())
-            {
-                run();
-            }
-            else
-            {
-                walk();
-            }
+            agent.speed = sprintSpeed;
         }
     }
 
@@ -122,10 +108,12 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                    StartCoroutine(firingPattern());
+                    //StartCoroutine(firingPattern());
                 }
                 else
                 {
+                    agent.speed = sprintSpeed;
+                    animate.SetTrigger("Run");
                     if (mortarTimer > mortarRate)
                     {
                         fireMortar();
@@ -141,7 +129,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        bodyRot.transform.rotation = Quaternion.Lerp(bodyRot.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -158,7 +146,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    void fireCannons()
+    public void fireCannons()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
         if (cannonTimer > cannonRate)
@@ -171,7 +159,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
 
     }
-    void fireMachineGuns()
+    public void fireMachineGuns()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
         if (mgTimer > gunRate)
@@ -187,7 +175,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void fireMortar()
     {
         mortarTimer = 0;
-        Instantiate(explosiveShell, mortar.position, mortar.rotation);
+        Quaternion archShot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y + 10, playerDir.z));
+        Instantiate(explosiveShell, mortar.position, archShot);
 
     }
     public void takeDamage(int amount, Vector3 direction)
@@ -223,25 +212,9 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator firingPattern()
     {
-        fireMachineGuns();
+        animate.SetTrigger("CannonFire");
         yield return new WaitForSeconds(6.5f);
-        fireCannons();
-    }
-
-    void still()
-    {
-        animate.SetTrigger("Stop");
-    }
-    void run()
-    {
-        agent.speed = sprintSpeed;
-        animate.SetTrigger("Run");
-    }
-
-    void walk()
-    {
-        agent.speed = speedOrig;
-        animate.SetTrigger("Walk");
+        animate.SetTrigger("MGFire");
     }
     void die()
     {
@@ -249,7 +222,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     bool runToPos()
     {
-        if (agent.remainingDistance > stoppingDistOrg + 8)
+        if (agent.remainingDistance > stoppingDistOrg + 1)
         {
             return true;
         }
