@@ -11007,6 +11007,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74a80670e95925147b28865fd87a953d, type: 3}
+--- !u!1 &979059207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5900280390987680561, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+  m_PrefabInstance: {fileID: 2950160636915920851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &979059213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+  m_PrefabInstance: {fileID: 2950160636915920851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979059207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd1bdfec6ed22a47a824cd19c52d1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::playerController
 --- !u!1001 &984212276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18446,6 +18462,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7461233412733479822, guid: 1dcf0fa6a662feb41876a7338d95944d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 979059207}
+    - target: {fileID: 7461233412733479822, guid: 1dcf0fa6a662feb41876a7338d95944d, type: 3}
+      propertyPath: playerScript
+      value: 
+      objectReference: {fileID: 979059213}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23395,6 +23419,10 @@ PrefabInstance:
     - target: {fileID: 3318220123617443667, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: kickBack
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6159307534253487444, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: m_LocalPosition.x
