@@ -11,12 +11,15 @@ public class RoomController : MonoBehaviour
 
     public bool roomCleared;
     private bool roomActivated;
+    private bool roomClearCheck;
     public int enemyCount;
 
     void Start()
     {
         // Adds this room to the goal count
         GameManager.instance.UpdateGameGoal(1);
+
+        roomClearCheck = false;
 
         // Start with both doors unlocked
         SetDoorsLocked(false);
@@ -25,9 +28,9 @@ public class RoomController : MonoBehaviour
 
     void Update()
     {
-
-        if (roomCleared)
+        if (roomCleared && !roomClearCheck)
         {
+            roomClearCheck = true;
             UnlockExit();
         }
     }
