@@ -56,6 +56,10 @@ public class RoomController : MonoBehaviour
 void spawnEnemies()
     {
         int spawnCount = 0;
+        if (enemies.Count <= 0)
+        {
+            roomCleared = true;
+        }
         foreach (var enemy in enemies)
         {
             GameObject newEnemy = Instantiate(enemy, enemySpawnPoints[spawnCount].transform.position, enemySpawnPoints[spawnCount].transform.rotation);
