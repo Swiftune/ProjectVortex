@@ -14,12 +14,11 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     [SerializeField] float roamPauseTime;
     [SerializeField] float sprintSpeed;
     [SerializeField] float timeTillPush;
-    [SerializeField] Transform shootPos;
+    [SerializeField] Transform[] shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] Animator animate;
 
-    Material mat;
     Color colorOrig;
     float shootTimer;
     float roamTimer;
@@ -33,7 +32,10 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EnsureMat();
+        for (int i = 0; i < model.Length; i++)
+        {
+            colorOrig = model[i].material.color;
+        }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
         speedOrig = agent.speed;    
@@ -63,36 +65,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             checkRoam();
         }
-        if (playerInRange && canSeePlayer())
-        {
-            run();
-        }
-    }
-
-    bool EnsureMat()
-    {
-        // if the model is missing or is not on the scene, find on the enemy
-        for(int i = 0; i < model.Length; i++)
-        {
-            if (model[i] == null || !model[i].gameObject.scene.IsValid())
-            {
-                // finds the enemy render
-                model[i] = GetComponentInChildren<Renderer>(true);
-            }
-
-            // Bail if can't find the model
-            if (model[i] == null)
-            {
-                return false;
-            }
-            // set the material
-            if (mat == null)
-            {
-                mat = model[i].material;
-                colorOrig = mat.color;
-            }
-        }
-        return true;
     }
 
     void checkRoam()
@@ -125,26 +97,17 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (shootTimer > shootRate)
                 {
-                    shoot();
+                    runNgun();
                 }
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
-                    faceTarget();
                     still();
-                    agent.stoppingDistance = stoppingDistOrg;
-                }
-                else
-                {
-                    runNgun();
-                }
-                if (agent.remainingDistance == 3)
-                {
-                    pushTimer += Time.deltaTime;
-                    if (pushTimer >= timeTillPush)
+                    if (shootTimer > shootRate)
                     {
-                        pushTimer = 0;
-                        melee();
+                        shootAnim();
                     }
+                    faceTarget();
+                    agent.stoppingDistance = stoppingDistOrg;
                 }
                 return true;
             }
@@ -176,11 +139,18 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-        shootAnim();
+        for (int i = 0; i < shootPos.Length; i++)
+        {
+            Instantiate(bullet, shootPos[i].position, shootPos[i].rotation);
+        }
     }
     void runNgun()
     {
         animate.SetTrigger("Run Shoot");
+        if (shootTimer > shootRate)
+        {
+            shoot();
+        }
     }
     void melee()
     {
@@ -205,6 +175,9 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         for (int i = 0; i < model.Length; i++)
         {
             model[i].material.color = Color.red;
+        }
+        for (int i = 0; i < model.Length; i++)
+        {
             yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
@@ -227,5 +200,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     void shootAnim()
     {
         animate.SetTrigger("Shoot");
+        shoot();
     }
 }
