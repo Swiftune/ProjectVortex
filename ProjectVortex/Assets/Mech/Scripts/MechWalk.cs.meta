@@ -1,8 +1,12 @@
 fileFormatVersion: 2
-guid: b7ffb033641f9854ebe4ee2ef792233e
-timeCreated: 1496215263
+guid: 5be40f2d51ce9914d8f0702a3ce71bc7
+timeCreated: 1496125468
 licenseType: Store
-TextScriptImporter:
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,5 +15,5 @@ AssetOrigin:
   productId: 90395
   packageName: Assault Mech
   packageVersion: 1.0
-  assetPath: Assets/Mech/IMPORTANT.txt
+  assetPath: Assets/Mech/Scripts/MechWalk.cs
   uploadId: 182823

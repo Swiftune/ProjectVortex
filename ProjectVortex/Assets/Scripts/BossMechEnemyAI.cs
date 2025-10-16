@@ -4,25 +4,19 @@ using UnityEngine.AI;
 
 public class BossEnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
+    [SerializeField] Renderer[] model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
-    [SerializeField] Transform pelvisPos;
+    [SerializeField] Transform bodyRot;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
     [SerializeField] int sprintSpeed;
-    [SerializeField] Transform shootPos1;
-    [SerializeField] Transform shootPos2;
-    [SerializeField] Transform shootPos3;
-    [SerializeField] Transform shootPos4;
-    [SerializeField] Transform shootPos5;
-    [SerializeField] Transform shootPos6;
-    [SerializeField] Transform shootPos7;
-    [SerializeField] Transform shootPos8;
-    [SerializeField] Transform shootPos9;
+    [SerializeField] Transform[] cannons;
+    [SerializeField] Transform[] machineGuns;
+    [SerializeField] Transform mortar;
     [SerializeField] GameObject cannonRound;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject explosiveShell;
@@ -31,43 +25,37 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] float mortarRate;
     [SerializeField] Animator animate;
 
-    Material mat;
     Color colorOrig;
-    float shootTimer1;
-    float shootTimer2;
-    float shootTimer3;
+    float cannonTimer;
+    float mgTimer;
+    float mortarTimer;
     float roamTimer;
     float angleToPlayer;
     float stoppingDistOrg;
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
+    Quaternion defaultRot;
     float speedOrig;
-    Transform[] bigCannons = new Transform [4];
-    Transform[] machineGuns = new Transform[4];
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        EnsureMat();
+        for (int i = 0; i < model.Length; i++)
+        {
+            colorOrig = model[i].material.color;
+        }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
         speedOrig = agent.speed;
-        bigCannons[0] = shootPos1;
-        bigCannons[1] = shootPos2;
-        bigCannons[2] = shootPos3;
-        bigCannons[3] = shootPos4;
-        machineGuns[0] = shootPos5;
-        machineGuns[1] = shootPos6;
-        machineGuns[2] = shootPos7;
-        machineGuns[3] = shootPos8;
+        defaultRot = bodyRot.transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        shootTimer1 += Time.deltaTime;
-        shootTimer2 += Time.deltaTime;
-        shootTimer3 += Time.deltaTime;
+        cannonTimer += Time.deltaTime;
+        mgTimer += Time.deltaTime;
+        mortarTimer += Time.deltaTime;
         if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
@@ -82,6 +70,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
         if (playerInRange && !canSeePlayer())
         {
+            bodyRot.transform.rotation = defaultRot;
             checkRoam();
         }
         else if (!playerInRange)
@@ -99,31 +88,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 walk();
             }
         }
-    }
-
-    bool EnsureMat()
-    {
-        // if the model is missing or is not on the scene, find on the enemy
-        if (model == null || !model.gameObject.scene.IsValid())
-        {
-            // finds the enemy render
-            model = GetComponentInChildren<Renderer>(true);
-        }
-
-        // Bail if can't find the model
-        if (model == null)
-        {
-            return false;
-        }
-
-        // set the material
-        if (mat == null)
-        {
-            mat = model.material;
-            colorOrig = mat.color;
-        }
-
-        return true;
     }
 
     void checkRoam()
@@ -158,24 +122,13 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                    if(shootTimer2 > gunRate)
-                    {
-                        fireMachineGuns();
-                        shootTimer2 = 0;
-                        shootTimer1 = cannonRate - 5;
-                    }
-                    if(shootTimer1 > cannonRate)
-                    {
-                        fireCannons();
-                        shootTimer1 = 0;
-                    }
+                    StartCoroutine(firingPattern());
                 }
                 else
                 {
-                    if (shootTimer3 > mortarRate)
+                    if (mortarTimer > mortarRate)
                     {
                         fireMortar();
-                        shootTimer3 = 0;
                     }
                 }
                 return true;
@@ -187,8 +140,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z - 90));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        bodyRot.transform.rotation = Quaternion.Lerp(bodyRot.transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -207,16 +160,34 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     void fireCannons()
     {
-        shootTimer1 = 0;
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        if (cannonTimer > cannonRate)
+        {
+            cannonTimer = 0;
+            for (int i = 0; i < cannons.Length; i++)
+            {
+                Instantiate(cannonRound, cannons[i].position, rot);
+            }
+        }
+
     }
     void fireMachineGuns()
     {
-        shootTimer2 = 0;
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        if (mgTimer > gunRate)
+        {
+            mgTimer = 0;
+            for (int i = 0; i < machineGuns.Length; i++)
+            {
+                Instantiate(cannonRound, machineGuns[i].position, rot);
+            }
+        }
 
     }
     void fireMortar()
     {
-        shootTimer3 = 0;
+        mortarTimer = 0;
+        Instantiate(explosiveShell, mortar.position, mortar.rotation);
 
     }
     public void takeDamage(int amount, Vector3 direction)
@@ -234,15 +205,27 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator flashRed()
     {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = colorOrig;
+        for (int i = 0; i < model.Length; i++)
+        {
+            model[i].material.color = Color.red;
+        }
+        for (int i = 0; i < model.Length; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            model[i].material.color = colorOrig;
+        }
     }
     IEnumerator pauseForDeath()
     {
         animate.SetTrigger("Death");
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
+    }
+    IEnumerator firingPattern()
+    {
+        fireMachineGuns();
+        yield return new WaitForSeconds(6.5f);
+        fireCannons();
     }
 
     void still()
