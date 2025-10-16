@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   menuActive: {fileID: 0}
-  menuPause: {fileID: 0}
+  menuPause: {fileID: 2015059871}
   menuLose: {fileID: 0}
   menuWin: {fileID: 0}
   menuMain: {fileID: 2015059871}
@@ -1057,6 +1057,10 @@ PrefabInstance:
     - target: {fileID: 3318220123617443667, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821753311320133999, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: sens
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 6159307534253487444, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: m_LocalPosition.x

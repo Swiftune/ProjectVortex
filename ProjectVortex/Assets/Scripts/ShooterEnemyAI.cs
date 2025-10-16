@@ -49,21 +49,21 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             roamTimer += Time.deltaTime;
         }
-        if(roamTimer != 0)
-        {
-            still();
-        }
-        else
-        {
-            walk();
-        }
         if (playerInRange && !canSeePlayer())
         {
             checkRoam();
+            agent.speed = speedOrig;
+            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
         }
         else if (!playerInRange)
         {
             checkRoam();
+            agent.speed = speedOrig;
+            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
+        }
+        if (runToPos())
+        {
+            agent.speed = sprintSpeed;
         }
     }
 
@@ -97,17 +97,17 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (shootTimer > shootRate)
                 {
-                    runNgun();
+                    animate.SetTrigger("Shoot");
                 }
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
-                    still();
-                    if (shootTimer > shootRate)
-                    {
-                        shootAnim();
-                    }
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
+                }
+                else
+                {
+                    agent.speed = sprintSpeed;
+                    animate.SetTrigger("Run");
                 }
                 return true;
             }
@@ -136,20 +136,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    void shoot()
+    public void shoot()
     {
         shootTimer = 0;
         for (int i = 0; i < shootPos.Length; i++)
         {
             Instantiate(bullet, shootPos[i].position, shootPos[i].rotation);
-        }
-    }
-    void runNgun()
-    {
-        animate.SetTrigger("Run Shoot");
-        if (shootTimer > shootRate)
-        {
-            shoot();
         }
     }
     void melee()
@@ -182,24 +174,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
             model[i].material.color = colorOrig;
         }
     }
-
-    void still()
+    bool runToPos()
     {
-        animate.SetTrigger("Stop");
-    }
-    void run()
-    {
-        animate.SetTrigger("Run");
-        agent.speed = sprintSpeed;
-    }
-     void walk()
-    {
-        animate.SetTrigger("Walk");
-        agent.speed = speedOrig;
-    }
-    void shootAnim()
-    {
-        animate.SetTrigger("Shoot");
-        shoot();
+        if (agent.remainingDistance > stoppingDistOrg + 1)
+        {
+            return true;
+        }
+        return false;
     }
 }
