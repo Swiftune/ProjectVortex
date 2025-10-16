@@ -14466,6 +14466,46 @@ PrefabInstance:
       propertyPath: 'enemySpawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1558268621}
+    - target: {fileID: 4880932992068399228, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.500845
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880932992068399228, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.5001335
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880932992068399228, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710665
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880932992068399228, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.707107
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880932992068399228, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356273304802270172, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -28.500496
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356273304802270172, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.49988583
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356273304802270172, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00000032782552
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356273304802270172, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356273304802270172, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 6657363866902231839, guid: 7ce8f6f4c0e4a224fa77a451d0d9cc31, type: 3}
       propertyPath: m_Name
       value: Middle Room

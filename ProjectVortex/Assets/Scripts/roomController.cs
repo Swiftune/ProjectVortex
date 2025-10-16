@@ -30,8 +30,8 @@ public class RoomController : MonoBehaviour
     {
         if (roomCleared && !roomClearCheck)
         {
+            roomClearCheck = true;
             UnlockExit();
-            roomActivated = true;
         }
     }
 
