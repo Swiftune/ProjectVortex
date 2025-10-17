@@ -15,6 +15,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
 
+    [SerializeField] GameObject gunModel;
     [SerializeField] float bulletDamage;
     [SerializeField] float shootRate;
     [SerializeField] float bulletSpread;
