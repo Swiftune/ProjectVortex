@@ -955,7 +955,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4197335979955970358}
-  - component: {fileID: -4669607253510034421}
+  - component: {fileID: 6153057815848554580}
   - component: {fileID: 7798354987605986899}
   - component: {fileID: 8190507668359212038}
   - component: {fileID: 6927173197942394131}
@@ -976,7 +976,7 @@ Transform:
   m_GameObject: {fileID: 4067181619481497305}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.6985526, z: 0, w: 0.7155587}
-  m_LocalPosition: {x: -35.436497, y: 0.39527607, z: 14.7912445}
+  m_LocalPosition: {x: -41.31108, y: 0.3988614, z: 26.069397}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -984,7 +984,7 @@ Transform:
   - {fileID: 1095973336111223238}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -88.622, z: 0}
---- !u!114 &-4669607253510034421
+--- !u!114 &6153057815848554580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1056,7 +1056,7 @@ NavMeshAgent:
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 4
+  m_StoppingDistance: 1.8
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1

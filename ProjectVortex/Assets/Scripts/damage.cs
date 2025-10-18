@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class Damage : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class Damage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (type == damageType.moving || type == damageType.homing)
+        if (type == damageType.moving || type == damageType.homing || type == damageType.stationary)
         {
             Destroy(gameObject, destroyTime);
 

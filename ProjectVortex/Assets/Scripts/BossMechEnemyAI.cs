@@ -46,7 +46,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
-        speedOrig = agent.speed;
         defaultRot = bodyRot.transform.rotation;
     }
 
@@ -56,19 +55,20 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         cannonTimer += Time.deltaTime;
         mgTimer += Time.deltaTime;
         mortarTimer += Time.deltaTime;
+        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
         }
         if (playerInRange && !canSeePlayer())
         {
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
             checkRoam();
+            originalRot();
         }
         else if (!playerInRange)
         {
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
             checkRoam();
+            originalRot();  
         }
         if (runToPos())
         {
@@ -131,6 +131,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime * faceTargetSpeed);
     }
+    void originalRot()
+    {
+        bodyRot.transform.localRotation = Quaternion.Lerp(bodyRot.transform.localRotation, defaultRot, Time.deltaTime * faceTargetSpeed);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -148,7 +152,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     public void fireCannons()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, 0));
         if (cannonTimer > cannonRate)
         {
             cannonTimer = 0;
@@ -161,7 +165,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     public void fireMachineGuns()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, 0));
         if (mgTimer > gunRate)
         {
             mgTimer = 0;

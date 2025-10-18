@@ -52,7 +52,7 @@ MonoBehaviour:
   knockBackAmount: 5
   damageRate: 1
   speed: 0
-  destroyTime: 0
+  destroyTime: 1
 --- !u!65 &1390420173893827523
 BoxCollider:
   m_ObjectHideFlags: 0
