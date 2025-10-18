@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //checkHP();
+        checkHP();
     }
 
     public void statePause()
