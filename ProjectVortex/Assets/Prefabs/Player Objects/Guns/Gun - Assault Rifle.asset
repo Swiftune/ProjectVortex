@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0ba6ae8cee4994f8efa61ed20ffec8, type: 3}
+  m_Name: Gun - Assault Rifle
+  m_EditorClassIdentifier: Assembly-CSharp::gunStats
+  gunModel: {fileID: 4311248730837266121, guid: c20daf91d2bce304c85fec03f5fafd3b, type: 3}
+  bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
+  shootDamage: 1
+  shootSpeed: 100
+  shootTime: 10
+  shootRate: 0.1
+  spread: 0.1
+  bulletCount: 1
+  kickBack: 0
+  isInfinite: 0
+  ammoCur: 5
+  ammoMax: 5

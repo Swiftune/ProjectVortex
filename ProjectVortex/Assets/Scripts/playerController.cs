@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IPickup
 {
     [SerializeField] CharacterController controller;
 
@@ -14,17 +14,20 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
+    [SerializeField] GameObject gunPos;
 
-    [SerializeField] GameObject gunModel;
-    [SerializeField] float bulletDamage;
-    [SerializeField] float shootRate;
-    [SerializeField] float bulletSpread;
-    [SerializeField] float bulletCount;
-    [SerializeField] float kickBack;
-    [SerializeField] float knockBackTime;
+    public GameObject bullet;
+    public int bulletDamage;
+    public float shootRate;
+    public int shootSpeed;
+    public int shootTime;
+    public float bulletSpread;
+    public float bulletCount;
+    public float kickBack;
+    public bool isInfinite;
+    public float knockBackTime;
 
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform shootPos;
+    public Transform shootPos;
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -137,6 +140,9 @@ public class playerController : MonoBehaviour, IDamage
             shootDir.y = Random.Range(shootDir.y  - bulletSpread, shootDir.y + bulletSpread);
             shootDir.z = Random.Range(shootDir.z - bulletSpread, shootDir.z + bulletSpread);
             GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.LookRotation(shootDir));
+            newBullet.GetComponent<Damage>().damageAmount = bulletDamage;
+            newBullet.GetComponent<Damage>().speed = shootSpeed;
+            newBullet.GetComponent<Damage>().destroyTime = shootTime;
         }
         knockBack -= shootPos.forward * kickBack;
     }
@@ -178,4 +184,28 @@ public class playerController : MonoBehaviour, IDamage
     {
         knockBack = direction;
     }
+
+    public void getGunStats(gunStats gun)
+    {
+        bulletDamage = gun.shootDamage;
+        shootRate = gun.shootRate;
+        shootSpeed = gun.shootSpeed;
+        shootTime = gun.shootTime;
+        bulletSpread = gun.spread;
+        bulletCount = gun.bulletCount;
+        kickBack = gun.kickBack;
+        bullet = gun.bullet;
+
+       GameObject gunClone = Instantiate(gun.gunModel, gunPos.transform.position, gunPos.transform.rotation);
+        if (GameObject.Find("Main Camera/Gun Model") != null)
+        {
+            Destroy(GameObject.Find("Main Camera/Gun Model"));
+        }
+
+        gunClone.name = "Gun Model";
+
+        gunClone.transform.parent = this.transform.Find("Main Camera").transform;
+
+
+}
 }
