@@ -1280,7 +1280,7 @@ ModelImporter:
       name: ShootBigCanon_A
       takeName: ShootBigCanon_A
       internalID: 0
-      firstFrame: 0
+      firstFrame: -1
       lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
@@ -1300,14 +1300,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: ShootBigCanonA
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -1446,7 +1439,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: ShootBigCanonB
+        functionName: fireCannons
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1590,7 +1583,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: ShootSmallCanonA
+        functionName: fireMachineGuns
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1732,14 +1725,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: ShootSmallCanonB
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
