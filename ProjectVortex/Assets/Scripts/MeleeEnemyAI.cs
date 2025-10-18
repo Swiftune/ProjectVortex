@@ -16,8 +16,6 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
 
     Color colorOrig;
     float attackTimer;
-    float movingToPlayer;
-    float angleToPlayer;
     Vector3 playerDir;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +30,6 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         attackTimer += Time.deltaTime;
-        movingToPlayer += Time.deltaTime;
         animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         RushPlayer();
     }
@@ -41,14 +38,12 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
         playerDir = GameManager.instance.player.transform.position - headPos.position;
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
             if(agent.remainingDistance <= agent.stoppingDistance)
             {
-                movingToPlayer = 0;
                 if (attackTimer >= attackRate)
                 {
                     attackAnim();

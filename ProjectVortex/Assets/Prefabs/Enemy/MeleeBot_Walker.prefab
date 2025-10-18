@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 606099791169084432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7103144, z: 0, w: 0.70388454}
-  m_LocalPosition: {x: -33.645256, y: 0.39886, z: 37.51094}
+  m_LocalPosition: {x: -44.39632, y: 0.39886093, z: 22.055832}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -286,7 +286,8 @@ MonoBehaviour:
   HP: 4
   FOV: 360
   faceTargetSpeed: 3
-  weapon: {fileID: 896162715316165544}
+  weapon: {fileID: 4418732832174457357, guid: 33835bd2587ce2345ae5baabd9e6016f, type: 3}
+  weaponHolder: {fileID: 4046745685235112930}
   attackRate: 2
   animate: {fileID: 6866771487233448300}
 --- !u!195 &3890760940760052316
@@ -396,107 +397,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5388997223466173278}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &896162715316165544
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 599038928078944401}
-  - component: {fileID: 4621414307920793508}
-  - component: {fileID: 7992437989306263421}
-  - component: {fileID: 4424682749039583843}
-  m_Layer: 8
-  m_Name: Enemy Station Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &599038928078944401
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896162715316165544}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0047129393, y: -0.042506814, z: 0.015422046}
-  m_LocalScale: {x: 0.2, y: 0.46, z: 0.2}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4046745685235112930}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4621414307920793508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896162715316165544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddde1f1c24bf9d8448203facaf1b23f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Damage
-  type: 1
-  rb: {fileID: 4424682749039583843}
-  damageAmount: 3
-  knockBackAmount: 0
-  damageRate: 1
-  speed: 0
-  destroyTime: 0
---- !u!65 &7992437989306263421
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896162715316165544}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &4424682749039583843
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 896162715316165544}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1257992532667535536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1340,6 @@ Transform:
   - {fileID: 6625382670735396926}
   - {fileID: 4281941264100161462}
   - {fileID: 5942741378835684122}
-  - {fileID: 599038928078944401}
   m_Father: {fileID: 1784831896468619652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5712832805141273407

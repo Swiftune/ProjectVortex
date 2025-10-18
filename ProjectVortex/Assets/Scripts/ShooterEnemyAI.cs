@@ -12,8 +12,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] float roamPauseTime;
-    [SerializeField] float sprintSpeed;
-    [SerializeField] float timeTillPush;
     [SerializeField] Transform[] shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -22,10 +20,8 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     Color colorOrig;
     float shootTimer;
     float roamTimer;
-    float pushTimer;
     float angleToPlayer;
     float stoppingDistOrg;
-    float speedOrig;
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
@@ -38,9 +34,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
-        speedOrig = agent.speed;    
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -52,21 +46,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         if (playerInRange && !canSeePlayer())
         {
             checkRoam();
-            agent.speed = speedOrig;
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
         }
         else if (!playerInRange)
         {
             checkRoam();
-            agent.speed = speedOrig;
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
-        }
-        if (runToPos())
-        {
-            agent.speed = sprintSpeed;
         }
     }
-
     void checkRoam()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
@@ -76,6 +61,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     void roam()
     {
+        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         roamTimer = 0;
         agent.stoppingDistance = 0;
         Vector3 ranPos = Random.insideUnitSphere * roamDist;
@@ -92,22 +78,18 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
+            animate.SetFloat("Shoot", agent.velocity.normalized.magnitude);
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (shootTimer > shootRate)
                 {
-                    animate.SetTrigger("Shoot");
+                    shoot();
                 }
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                }
-                else
-                {
-                    agent.speed = sprintSpeed;
-                    animate.SetTrigger("Run");
                 }
                 return true;
             }
@@ -115,10 +97,9 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         return false;
 
     }
-
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
@@ -138,17 +119,13 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     public void shoot()
     {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, 0));
         shootTimer = 0;
         for (int i = 0; i < shootPos.Length; i++)
         {
-            Instantiate(bullet, shootPos[i].position, shootPos[i].rotation);
+            Instantiate(bullet, shootPos[i].position, rot);
         }
     }
-    void melee()
-    {
-        animate.SetTrigger("Melee");
-    }
-
     public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
@@ -173,13 +150,5 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
             yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
-    }
-    bool runToPos()
-    {
-        if (agent.remainingDistance > stoppingDistOrg + 1)
-        {
-            return true;
-        }
-        return false;
     }
 }
