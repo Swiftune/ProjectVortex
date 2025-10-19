@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
+using System.Collections;
+using System.Collections.Generic;
 
 public class playerController : MonoBehaviour, IDamage, IPickup
 {
@@ -26,6 +28,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public float kickBack;
     public bool isInfinite;
     public float knockBackTime;
+    public List<gunStats> gunList;
 
     public Transform shootPos;
 
@@ -187,6 +190,12 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void getGunStats(gunStats gun)
     {
+      if (gunList.Count > 1)
+        {
+            gunList.Remove(gunList[1]);
+        }
+        gunList.Add(gun);
+
         bulletDamage = gun.shootDamage;
         shootRate = gun.shootRate;
         shootSpeed = gun.shootSpeed;
