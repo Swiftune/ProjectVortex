@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2617794018683844060}
-  - component: {fileID: 2302985028659826681}
   - component: {fileID: 771155326653350192}
   - component: {fileID: 4527059687057746152}
   - component: {fileID: 6609179842535102218}
@@ -36,19 +35,6 @@ Transform:
   - {fileID: 4489308629091821805}
   m_Father: {fileID: 3218750668955823840}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2302985028659826681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2656321128603159812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bca10d828615f3d49818b496756b1c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::pickup
-  gun: {fileID: 11400000, guid: fea59eb2ccc547344824381d56a67973, type: 2}
 --- !u!33 &771155326653350192
 MeshFilter:
   m_ObjectHideFlags: 0
