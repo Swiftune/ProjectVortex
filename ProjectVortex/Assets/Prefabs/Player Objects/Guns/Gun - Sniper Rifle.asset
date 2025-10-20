@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c0ba6ae8cee4994f8efa61ed20ffec8, type: 3}
-  m_Name: Gun - Assault Rifle
+  m_Name: Gun - Sniper Rifle
   m_EditorClassIdentifier: Assembly-CSharp::gunStats
-  gunModel: {fileID: 345720287428856213, guid: 7499f809178bc82499d26033af6ffa12, type: 3}
+  gunModel: {fileID: 2352997721424495953, guid: bb0cd604d12965b48bc6104313af13d8, type: 3}
   bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
-  shootDamage: 1
+  shootDamage: 5
   shootSpeed: 100
-  shootTime: 10
-  shootRate: 0.1
-  spread: 0.1
+  shootTime: 100
+  shootRate: 2
+  spread: 0.01
   bulletCount: 1
-  kickBack: 0
+  kickBack: 2
   isInfinite: 0
   ammoCur: 5
   ammoMax: 5

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
+using System.Collections;
+using System.Collections.Generic;
 
 public class playerController : MonoBehaviour, IDamage, IPickup
 {
@@ -26,6 +28,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public float kickBack;
     public bool isInfinite;
     public float knockBackTime;
+    public List<gunStats> gunList;
 
     public Transform shootPos;
 
@@ -35,6 +38,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     int jumpCount;
     float HPOrig;
+    [Range(0, 1)] int gunListPos;
 
     float shootTimer;
 
@@ -96,6 +100,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
         Vector3 finalMove = (moveDir + knockBack) * speed + playerVel;
         controller.Move(finalMove * Time.deltaTime);
+
+        switchGun();
     }
 
     void sprint()
@@ -112,7 +118,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void jump()
     {
-        if (jumpCount < jumpCountMax)
+        if (controller.isGrounded || jumpCount < jumpCountMax)
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
@@ -124,7 +130,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void ShootEvent()
     {
-        if (shootEnabled && shootTimer >= shootRate)
+        if (shootEnabled && shootTimer >= shootRate && gunList.Count > 0 && (gunList[gunListPos].ammoCur > 0 || gunList[gunListPos].isInfinite))
         {
             shoot();
         }
@@ -132,6 +138,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     void shoot()
     {
+        gunList[gunListPos].ammoCur--;
+
         shootTimer = 0;
         for (int i = 0; i < bulletCount; i++)
         {
@@ -187,16 +195,30 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void getGunStats(gunStats gun)
     {
-        bulletDamage = gun.shootDamage;
-        shootRate = gun.shootRate;
-        shootSpeed = gun.shootSpeed;
-        shootTime = gun.shootTime;
-        bulletSpread = gun.spread;
-        bulletCount = gun.bulletCount;
-        kickBack = gun.kickBack;
-        bullet = gun.bullet;
+      if (gunList.Count > 1)
+        {
+            gunList.Remove(gunList[1]);
+        }
+        gunList.Add(gun);
 
-       GameObject gunClone = Instantiate(gun.gunModel, gunPos.transform.position, gunPos.transform.rotation);
+        gunListPos = gunList.Count - 1;
+
+        changeGun();
+    }
+
+    void changeGun()
+    {
+
+        bulletDamage = gunList[gunListPos].shootDamage;
+        shootRate = gunList[gunListPos].shootRate;
+        shootSpeed = gunList[gunListPos].shootSpeed;
+        shootTime = gunList[gunListPos].shootTime;
+        bulletSpread = gunList[gunListPos].spread;
+        bulletCount = gunList[gunListPos].bulletCount;
+        kickBack = gunList[gunListPos].kickBack;
+        bullet = gunList[gunListPos].bullet;
+
+        GameObject gunClone = Instantiate(gunList[gunListPos].gunModel, gunPos.transform.position, gunPos.transform.rotation);
         if (GameObject.Find("Main Camera/Gun Model") != null)
         {
             Destroy(GameObject.Find("Main Camera/Gun Model"));
@@ -205,7 +227,19 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         gunClone.name = "Gun Model";
 
         gunClone.transform.parent = this.transform.Find("Main Camera").transform;
+    }
 
+    void switchGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
+        {
+            gunListPos++;
+            changeGun();
+        } else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            changeGun();
+        }
+    }
 
-}
 }
