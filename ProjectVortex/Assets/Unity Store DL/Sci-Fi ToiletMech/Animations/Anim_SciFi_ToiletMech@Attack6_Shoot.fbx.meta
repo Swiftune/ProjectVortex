@@ -41,7 +41,7 @@ ModelImporter:
       name: Attack6_Shoot
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 0
+      firstFrame: 50
       lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0

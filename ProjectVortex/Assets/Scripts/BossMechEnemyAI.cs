@@ -12,7 +12,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
-    [SerializeField] int sprintSpeed;
     [SerializeField] Transform[] cannons;
     [SerializeField] Transform[] machineGuns;
     [SerializeField] Transform mortar;
@@ -34,8 +33,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
-    Quaternion defaultRot;
-    float speedOrig;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,7 +42,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
-        defaultRot = bodyRot.transform.rotation;
     }
 
     // Update is called once per frame
@@ -62,16 +58,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         if (playerInRange && !canSeePlayer())
         {
             checkRoam();
-            originalRot();
         }
         else if (!playerInRange)
         {
             checkRoam();
-            originalRot();  
-        }
-        if (runToPos())
-        {
-            agent.speed = sprintSpeed;
         }
     }
 
@@ -111,8 +101,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 }
                 else
                 {
-                    agent.speed = sprintSpeed;
-                    animate.SetTrigger("Run");
                     if (mortarTimer > mortarRate)
                     {
                         fireMortar();
@@ -129,10 +117,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime);
-    }
-    void originalRot()
-    {
-        bodyRot.transform.localRotation = Quaternion.Lerp(bodyRot.transform.localRotation, defaultRot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -99,7 +99,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
@@ -119,7 +119,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     public void shoot()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, 0));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
         shootTimer = 0;
         for (int i = 0; i < shootPos.Length; i++)
         {
