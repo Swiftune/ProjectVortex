@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8844088678337223650}
   - component: {fileID: 2326633340020843559}
   - component: {fileID: 340477415392018969}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ToiletBot - Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

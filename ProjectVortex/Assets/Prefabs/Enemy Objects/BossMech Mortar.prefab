@@ -54,7 +54,7 @@ MonoBehaviour:
   damageAmount: 15
   knockBackAmount: 10
   damageRate: 0
-  speed: 50
+  speed: 30
   destroyTime: 10
 --- !u!33 &6793933591548941710
 MeshFilter:

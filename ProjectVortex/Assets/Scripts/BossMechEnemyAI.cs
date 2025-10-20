@@ -97,7 +97,16 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                    StartCoroutine(firingPattern());
+                    if (cannonTimer > cannonRate)
+                    {
+                        animate.SetTrigger("CannonFire");
+                        fireCannons();
+                    }
+                    if (mgTimer > gunRate)
+                    {
+                        animate.SetTrigger("MGFire");
+                        fireMachineGuns();
+                    }
                 }
                 else
                 {
@@ -133,31 +142,16 @@ public class BossEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    public void fireCannons()
+    void fireCannons()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, 0));
-        if (cannonTimer > cannonRate)
-        {
-            cannonTimer = 0;
-            for (int i = 0; i < cannons.Length; i++)
-            {
-                Instantiate(cannonRound, cannons[i].position, rot);
-            }
-        }
+        cannonTimer = 0;
+        StartCoroutine(firingPattern2());
 
     }
-    public void fireMachineGuns()
+    void fireMachineGuns()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, 0));
-        if (mgTimer > gunRate)
-        {
-            mgTimer = 0;
-            for (int i = 0; i < machineGuns.Length; i++)
-            {
-                Instantiate(cannonRound, machineGuns[i].position, rot);
-            }
-        }
-
+        mgTimer = 0;
+        StartCoroutine(firingPattern1());
     }
     void fireMortar()
     {
@@ -198,11 +192,23 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
     }
-    IEnumerator firingPattern()
+    IEnumerator firingPattern1()
     {
-        animate.SetTrigger("CannonFire");
-        yield return new WaitForSeconds(6.5f);
-        animate.SetTrigger("MGFire");
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        Instantiate(bullet, machineGuns[1].position, rot);
+        Instantiate(bullet, machineGuns[2].position, rot);
+        yield return new WaitForSeconds(0.05f);
+        Instantiate(bullet, machineGuns[0].position, rot);
+        Instantiate(bullet, machineGuns[3].position, rot);
+    }
+    IEnumerator firingPattern2()
+    {
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        Instantiate(cannonRound, cannons[0].position, rot);
+        Instantiate(cannonRound, cannons[1].position, rot);
+        yield return new WaitForSeconds(0.05f);
+        Instantiate(cannonRound, cannons[2].position, rot);
+        Instantiate(cannonRound, cannons[3].position, rot);
     }
     void die()
     {

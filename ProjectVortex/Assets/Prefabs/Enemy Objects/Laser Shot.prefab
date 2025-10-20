@@ -52,7 +52,7 @@ MonoBehaviour:
   damageAmount: 1
   knockBackAmount: 0
   damageRate: 1
-  speed: 30
+  speed: 50
   destroyTime: 3
 --- !u!135 &6148810349189206531
 SphereCollider:

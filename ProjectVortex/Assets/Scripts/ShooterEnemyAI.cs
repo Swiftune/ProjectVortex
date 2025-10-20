@@ -39,6 +39,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
+        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
@@ -51,10 +52,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             checkRoam();
         }
-        if(canSeePlayer() && playerInRange)
-        {
-            animate.SetFloat("Shoot", agent.velocity.normalized.magnitude);
-        }
     }
     void checkRoam()
     {
@@ -65,7 +62,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     }
     void roam()
     {
-        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         roamTimer = 0;
         agent.stoppingDistance = 0;
         Vector3 ranPos = Random.insideUnitSphere * roamDist;
@@ -87,7 +83,8 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (shootTimer > shootRate)
                 {
-                    shoot();
+                    shootTimer = 0;
+                    animate.SetTrigger("Shoot");
                 }
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
@@ -120,10 +117,9 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    public void shoot()
+    public void shootEvent()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        shootTimer = 0;
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x -1, playerDir.y, playerDir.z));
         for (int i = 0; i < shootPos.Length; i++)
         {
             Instantiate(bullet, shootPos[i].position, rot);
