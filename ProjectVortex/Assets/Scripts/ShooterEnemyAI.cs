@@ -51,6 +51,10 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             checkRoam();
         }
+        if(canSeePlayer() && playerInRange)
+        {
+            animate.SetFloat("Shoot", agent.velocity.normalized.magnitude);
+        }
     }
     void checkRoam()
     {
@@ -78,7 +82,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
-            animate.SetFloat("Shoot", agent.velocity.normalized.magnitude);
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);

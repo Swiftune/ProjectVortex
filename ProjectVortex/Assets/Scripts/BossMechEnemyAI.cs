@@ -169,6 +169,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
+        faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
         {
@@ -206,13 +207,5 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void die()
     {
         StartCoroutine(pauseForDeath());
-    }
-    bool runToPos()
-    {
-        if (agent.remainingDistance > stoppingDistOrg + 1)
-        {
-            return true;
-        }
-        return false;
     }
 }

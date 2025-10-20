@@ -91,13 +91,11 @@ MonoBehaviour:
   - {fileID: 277616125642897301}
   agent: {fileID: 4716129530586188233}
   headPos: {fileID: 3452702886749592036}
-  bodyRot: {fileID: 1935854243482584927}
   HP: 28
   faceTargetSpeed: 2
   FOV: 90
   roamDist: 20
   roamPauseTime: 7
-  sprintSpeed: 3
   cannons:
   - {fileID: 5192538838791066690}
   - {fileID: 5446716516123754340}
