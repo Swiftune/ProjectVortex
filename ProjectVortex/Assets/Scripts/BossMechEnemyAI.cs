@@ -7,7 +7,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer[] model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
-    [SerializeField] Transform bodyRot;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
@@ -108,7 +107,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                    //StartCoroutine(firingPattern());
+                    StartCoroutine(firingPattern());
                 }
                 else
                 {
@@ -129,7 +128,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime * faceTargetSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime);
     }
     void originalRot()
     {

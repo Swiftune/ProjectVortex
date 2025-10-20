@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 2594676880397203251}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0686, y: -0.01, z: 0.1562}
   m_LocalScale: {x: -0.01, y: -0.029233, z: 0.0147405}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54,7 +54,7 @@ MonoBehaviour:
   damageAmount: 1
   knockBackAmount: 0
   damageRate: 1
-  speed: 70
+  speed: 35
   destroyTime: 3
 --- !u!33 &6793933591548941710
 MeshFilter:
@@ -208,7 +208,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -217,8 +217,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.02393341
+        value: 0.1936512
         inSlope: 0
         outSlope: 0
         tangentMode: 0

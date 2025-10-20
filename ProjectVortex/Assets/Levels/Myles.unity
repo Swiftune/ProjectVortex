@@ -1116,63 +1116,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2076136649749760093, guid: 74a80670e95925147b28865fd87a953d, type: 3}
   m_PrefabInstance: {fileID: 1220404370}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1464117175
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 44214553177472211, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_Name
-      value: ToiletBot
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -37.909485
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.39885986
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 17.873594
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902991885415086538, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 53e11f578e1765c4996e8168630723bb, type: 3}
 --- !u!1001 &1703842883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1962,9 +1905,11 @@ MonoBehaviour:
   jumpSpeed: 15
   jumpCountMax: 1
   gravity: 30
+  bulletDamage: 0
   shootRate: 0.5
   bulletSpread: 0
   bulletCount: 0
+  kickBack: 0
   knockBackTime: 1
   bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
   shootPos: {fileID: 5856671838847688806}
@@ -2252,4 +2197,3 @@ SceneRoots:
   - {fileID: 6159307535280406962}
   - {fileID: 2099313598}
   - {fileID: 607542575}
-  - {fileID: 1464117175}
