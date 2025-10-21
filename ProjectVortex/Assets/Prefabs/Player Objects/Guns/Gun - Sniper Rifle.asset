@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::gunStats
   gunModel: {fileID: 2352997721424495953, guid: bb0cd604d12965b48bc6104313af13d8, type: 3}
   bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
-  shootDamage: 5
+  shootDamage: 8
   shootSpeed: 100
   shootTime: 100
   shootRate: 2
@@ -22,5 +22,5 @@ MonoBehaviour:
   bulletCount: 1
   kickBack: 2
   isInfinite: 0
-  ammoCur: 5
+  ammoCur: 0
   ammoMax: 5

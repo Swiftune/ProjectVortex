@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1528825756205066577}
   m_Layer: 7
   m_Name: Boss Mech
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,8 +94,6 @@ MonoBehaviour:
   HP: 28
   faceTargetSpeed: 2
   FOV: 180
-  roamDist: 25
-  roamPauseTime: 6
   cannons:
   - {fileID: 5192538838791066690}
   - {fileID: 5446716516123754340}

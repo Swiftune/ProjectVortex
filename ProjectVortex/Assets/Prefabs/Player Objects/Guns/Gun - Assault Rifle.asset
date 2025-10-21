@@ -22,5 +22,5 @@ MonoBehaviour:
   bulletCount: 1
   kickBack: 0
   isInfinite: 0
-  ammoCur: 5
-  ammoMax: 5
+  ammoCur: 21
+  ammoMax: 50
