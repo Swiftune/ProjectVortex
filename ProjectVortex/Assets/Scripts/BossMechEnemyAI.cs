@@ -139,14 +139,14 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
         UpdateHealthBar();
-        faceTarget();
-        agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
         {
             die();
         }
         else
         {
+            faceTarget();
+            agent.SetDestination(GameManager.instance.player.transform.position);
             StartCoroutine(flashRed());
         }
     }
