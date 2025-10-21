@@ -44,6 +44,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         stoppingDistOrg = agent.stoppingDistance;
         HPmax = HP;
         HPcurr = HP;
+        UpdateHealthBar();
     }
 
     // Update is called once per frame
@@ -52,6 +53,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         cannonTimer += Time.deltaTime;
         mgTimer += Time.deltaTime;
         mortarTimer += Time.deltaTime;
+        UpdateHealthBar();
         animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         if (playerInRange && !canSeePlayer())
         {
@@ -137,11 +139,11 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     public void takeDamage(int amount, Vector3 direction)
     {
-        HP -= amount;
+        HPcurr -= amount;
         UpdateHealthBar();
         faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
-        if (HP <= 0)
+        if (HPcurr <= 0)
         {
             die();
         }
@@ -195,6 +197,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void UpdateHealthBar()
     {
-        healthBar.value = HPcurr / HPmax; 
+        
+        healthBar.value = (float)HPcurr / (float)HPmax; 
     }
 }
