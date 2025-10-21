@@ -225,6 +225,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void applyKnockBack(Vector3 direction)
     {
         knockBack = direction;
+        jumpCount += 1;
     }
 
     public void getGunStats(gunStats gun)
