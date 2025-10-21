@@ -143,6 +143,11 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         gunList[gunListPos].ammoCur--;
 
+        if (gunList[gunListPos].isInfinite && gunList[gunListPos].ammoCur <= 0)
+        {
+            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        }
+
         shootTimer = 0;
         for (int i = 0; i < bulletCount; i++)
         {
@@ -151,7 +156,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
             shootDir.y = Random.Range(shootDir.y  - bulletSpread, shootDir.y + bulletSpread);
             shootDir.z = Random.Range(shootDir.z - bulletSpread, shootDir.z + bulletSpread);
             GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.LookRotation(shootDir));
-            newBullet.GetComponent<Damage>().damageAmount = bulletDamage;
+            newBullet.GetComponent<Damage>().enemyDamage = bulletDamage;
             newBullet.GetComponent<Damage>().speed = shootSpeed;
             newBullet.GetComponent<Damage>().destroyTime = shootTime;
         }
