@@ -170,8 +170,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator firingPattern1()
     {
-        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x + 1.5f, playerDir.y, playerDir.z));
-        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x - 1.5f, playerDir.y, playerDir.z));
+        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x - 1.5f, playerDir.y, playerDir.z));
+        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x + 1.5f, playerDir.y, playerDir.z));
         Instantiate(bullet, machineGuns[0].position, rotR);
         Instantiate(bullet, machineGuns[1].position, rotL);
         yield return new WaitForSeconds(0.05f);

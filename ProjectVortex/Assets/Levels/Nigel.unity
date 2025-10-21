@@ -13220,6 +13220,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7641884538149966573, guid: 7abce47b34c6c5e4cb38112e45a33de0, type: 3}
   m_PrefabInstance: {fileID: 1204659700}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1209724380 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3067137797978314898, guid: 1dcf0fa6a662feb41876a7338d95944d, type: 3}
+  m_PrefabInstance: {fileID: 1672832814}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1212491137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23641,6 +23652,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
+      propertyPath: ammoText
+      value: 
+      objectReference: {fileID: 1209724380}
     - target: {fileID: 5757736281138545642, guid: 12147c4b398a17147ba7fe7da5642778, type: 3}
       propertyPath: isInfinite
       value: 1
