@@ -29,6 +29,9 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     float stoppingDistOrg;
     bool playerInRange;
     Vector3 playerDir;
+
+    public int HPcurr;
+    public int HPmax;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +40,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
             colorOrig = model[i].material.color;
         }
         stoppingDistOrg = agent.stoppingDistance;
+        HPmax = HP;
+        HPcurr = HP;
     }
 
     // Update is called once per frame
@@ -131,6 +136,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
+        HPcurr = HP;
         faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)

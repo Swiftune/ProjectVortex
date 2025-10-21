@@ -51,7 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Damage
   type: 0
   rb: {fileID: 3429130641345701548}
-  damageAmount: 15
+  playerDamage: 0
+  enemyDamage: 10
   knockBackAmount: 10
   damageRate: 0
   speed: 30
