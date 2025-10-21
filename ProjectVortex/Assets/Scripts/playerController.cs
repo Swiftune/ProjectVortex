@@ -19,10 +19,12 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] GameObject gunPos;
 
     public GameObject bullet;
+    public GameObject grenade;
     public int bulletDamage;
     public float shootRate;
     public int shootSpeed;
     public int shootTime;
+    public int throwRate;
     public float bulletSpread;
     public float bulletCount;
     public float kickBack;
@@ -37,25 +39,31 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     Vector3 moveDir;
     Vector3 playerVel;
     public Vector3 knockBack;
+    public int grenadeVelocity;
 
     int jumpCount;
     float HPOrig;
     [Range(0, 1)] int gunListPos;
 
     float shootTimer;
+    float grenadeTimer;
 
     public bool shootEnabled;
+    public bool grenadeEnabled;
     float healthRegenTimer;
 
 
     void Start()
     {
         HPOrig = HP;
+        shootTimer = shootRate;
+        grenadeTimer = throwRate;
     }
 
     void Update()
     {
         shootTimer += Time.deltaTime;
+        grenadeTimer += Time.deltaTime;
         healthRegenTimer += Time.deltaTime;
 
         ammoText.SetText(gunList[gunListPos].ammoCur.ToString() + "/" + gunList[gunListPos].ammoMax.ToString());
@@ -63,6 +71,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         regenHealth();
         movement();
         ShootEvent();
+        GrenadeEvent();
         sprint();
     }
 
@@ -137,6 +146,26 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             shoot();
         }
+    }
+
+    public void GrenadeEvent()
+    {
+       if (grenadeEnabled && grenadeTimer >= throwRate)
+        {
+            throwGrenade();
+        }
+    }
+
+    void throwGrenade()
+    {
+        grenadeTimer = 0;
+
+        Vector3 shootDir = shootPos.forward;
+        Vector3 throwPos = shootPos.position;
+        throwPos.y += 1;
+        GameObject newGrenade = Instantiate(grenade, throwPos, Quaternion.LookRotation(shootDir));
+        newGrenade.GetComponent<Rigidbody>().linearVelocity = shootDir * grenadeVelocity;
+
     }
 
     void shoot()
