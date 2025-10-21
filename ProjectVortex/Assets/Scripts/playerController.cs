@@ -14,9 +14,10 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] float speed;
     [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
     [SerializeField] GameObject gunPos;
+    [SerializeField] float rayDist;
+    [SerializeField] LayerMask collisionLayer;
 
     public GameObject bullet;
     public GameObject grenade;
@@ -39,7 +40,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public Vector3 knockBack;
     public int grenadeVelocity;
 
-    int jumpCount;
     float HPOrig;
     [Range(0, 1)] int gunListPos;
 
@@ -98,7 +98,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
             if (playerVel.y < 0)
                 playerVel.y = 0;
             knockBack.y = 0;
-            jumpCount = 0;
         }
         else
         {
@@ -127,13 +126,13 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void jump()
     {
-        if (controller.isGrounded || jumpCount < jumpCountMax)
+
+        if (Physics.Raycast(transform.position, Vector3.down, rayDist, collisionLayer))
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
 
             playerVel.y = jumpSpeed;
-            jumpCount++;
         }
     }
 
@@ -225,7 +224,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void applyKnockBack(Vector3 direction)
     {
         knockBack = direction;
-        jumpCount += 1;
     }
 
     public void getGunStats(gunStats gun)
