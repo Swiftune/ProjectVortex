@@ -113,6 +113,9 @@ MonoBehaviour:
   gunRate: 0.5
   mortarRate: 5
   animate: {fileID: 6764385959781012768}
+  healthBar: {fileID: 5994012078269730400}
+  HPcurr: 0
+  HPmax: 0
 --- !u!195 &4716129530586188233
 NavMeshAgent:
   m_ObjectHideFlags: 0
