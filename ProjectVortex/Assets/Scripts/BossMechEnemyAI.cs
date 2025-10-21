@@ -98,7 +98,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, rot, Time.deltaTime * faceTargetSpeed);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -163,7 +163,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     IEnumerator pauseForDeath()
     {
         animate.SetTrigger("Death");
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
     IEnumerator firingPattern1()
