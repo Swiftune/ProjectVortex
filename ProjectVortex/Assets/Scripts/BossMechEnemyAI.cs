@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BossEnemyAI : MonoBehaviour, IDamage
 {
@@ -20,6 +21,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] float gunRate;
     [SerializeField] float mortarRate;
     [SerializeField] Animator animate;
+    [SerializeField] private Slider healthBar; 
 
     Color colorOrig;
     float cannonTimer;
@@ -136,7 +138,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
-        HPcurr = HP;
+        UpdateHealthBar();
         faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
@@ -189,5 +191,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void die()
     {
         StartCoroutine(pauseForDeath());
+    }
+
+    void UpdateHealthBar()
+    {
+        healthBar.value = HPcurr / HPmax; 
     }
 }

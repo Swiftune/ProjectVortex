@@ -12,7 +12,7 @@ public class Damage : MonoBehaviour
     public float knockBackAmount;
     public float damageRate;
     public int speed;
-    public int destroyTime;
+    public float destroyTime;
 
     bool isDamaging;
 

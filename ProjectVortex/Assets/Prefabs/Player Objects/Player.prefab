@@ -266,10 +266,12 @@ MonoBehaviour:
   gravity: 30
   gunPos: {fileID: 5411647177664298078}
   bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
+  grenade: {fileID: 592045020470273889, guid: 8634d03f4cbbcb24ab78cd86b919f352, type: 3}
   bulletDamage: 1
   shootRate: 0.5
   shootSpeed: 100
   shootTime: 10
+  throwRate: 5
   bulletSpread: 0.03
   bulletCount: 1
   kickBack: 0
@@ -279,7 +281,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fea59eb2ccc547344824381d56a67973, type: 2}
   shootPos: {fileID: 5856671837762262144}
   knockBack: {x: 0, y: 0, z: 0}
+  grenadeVelocity: 10
   shootEnabled: 0
+  grenadeEnabled: 0
 --- !u!33 &6283418428446449884
 MeshFilter:
   m_ObjectHideFlags: 0

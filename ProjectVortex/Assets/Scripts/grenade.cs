@@ -1,7 +1,7 @@
 using System.Threading;
 using UnityEngine;
 
-public class GrenadeScript : MonoBehaviour
+public class Grenade : MonoBehaviour
 {
     [SerializeField] float explodeTime;
     [SerializeField] GameObject explosion;
