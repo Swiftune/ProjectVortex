@@ -157,7 +157,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     IEnumerator pauseForDeath()
     {
         animate.SetTrigger("Death");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1.7f);
         Destroy(gameObject);
     }
     IEnumerator firingPattern1()
