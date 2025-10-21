@@ -7,7 +7,8 @@ public class Damage : MonoBehaviour
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
-    public int damageAmount;
+    public int playerDamage;
+    public int enemyDamage;
     public float knockBackAmount;
     public float damageRate;
     public int speed;
@@ -51,7 +52,14 @@ private void OnTriggerEnter(Collider other)
         {
             Vector3 pushBack = (other.transform.position - transform.position).normalized;
             pushBack.y = knockBackAmount / 5;
-            dmg.takeDamage(damageAmount, (pushBack * knockBackAmount));
+
+            if (other.CompareTag("Enemy"))
+            {
+                dmg.takeDamage(enemyDamage, (pushBack * knockBackAmount));
+            } else if (other.CompareTag("Player"))
+            {
+                dmg.takeDamage(playerDamage, (pushBack * knockBackAmount));
+            }
         }
 
         if (type == damageType.homing || type == damageType.moving)
@@ -81,7 +89,7 @@ private void OnTriggerEnter(Collider other)
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
-        d.takeDamage(damageAmount, Vector3.zero);
+        d.takeDamage(0, Vector3.zero);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
     }
