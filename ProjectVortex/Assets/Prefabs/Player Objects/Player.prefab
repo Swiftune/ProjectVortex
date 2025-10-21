@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerController
   controller: {fileID: 4228449030356161153}
-  HP: 5
+  HP: 10
   healthRegenThreshold: 5
   healthRegenRate: 1
   speed: 10

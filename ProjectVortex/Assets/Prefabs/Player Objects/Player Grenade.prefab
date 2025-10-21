@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7874618790205050721}
   - component: {fileID: 8751132289458613}
   - component: {fileID: 7834395312796345654}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055f93865a1bf7c47bf0db4a3e7a7e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
-  explodeTime: 3
+  explodeTime: 1
   explosion: {fileID: 3940133527265687639, guid: e83d39e4ac7b1924cb99bd7a1ac60482, type: 3}
 --- !u!33 &305949491083975929
 MeshFilter:
