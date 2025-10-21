@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 44214553177472211}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6701555, y: 0.39886045, z: 5.8566203}
+  m_LocalPosition: {x: 1.70639, y: 6.17773, z: -2.28612}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -94,14 +94,14 @@ MonoBehaviour:
   headPos: {fileID: 240686312656808353}
   HP: 6
   faceTargetSpeed: 3
-  FOV: 90
+  FOV: 180
   roamDist: 40
   roamPauseTime: 5
   shootPos:
   - {fileID: 5352161693862595072}
   - {fileID: 4509348880897700076}
   - {fileID: 3925478422502132021}
-  bullet: {fileID: 4381718117493819759, guid: 739b937723a32594390dddbf95d1097c, type: 3}
+  bullet: {fileID: 5600058646524127850, guid: fb6518d0f4db23d4cbb3567723864b8e, type: 3}
   shootRate: 6
   animate: {fileID: 340477415392018969}
 --- !u!136 &203819767786662598

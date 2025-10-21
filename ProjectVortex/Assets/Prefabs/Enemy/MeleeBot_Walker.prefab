@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 606099791169084432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7103144, z: 0, w: 0.70388454}
-  m_LocalPosition: {x: -44.39632, y: 0.39886093, z: 22.055832}
+  m_LocalPosition: {x: 1.81446, y: 4.79397, z: -1.08958}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -286,7 +286,7 @@ MonoBehaviour:
   HP: 4
   FOV: 360
   faceTargetSpeed: 3
-  weapon: {fileID: 4418732832174457357, guid: 33835bd2587ce2345ae5baabd9e6016f, type: 3}
+  weapon: {fileID: 5600058646524127850, guid: aeef194846bffdd4a839c7d007bf5b6c, type: 3}
   weaponHolder: {fileID: 4046745685235112930}
   attackRate: 2
   animate: {fileID: 6866771487233448300}

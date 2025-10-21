@@ -78,9 +78,9 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         {
             model[i].material.color = Color.red;
         }
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < model.Length; i++)
         {
-            yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
     }

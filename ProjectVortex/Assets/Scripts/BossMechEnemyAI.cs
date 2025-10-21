@@ -10,8 +10,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
     [SerializeField] Transform[] cannons;
     [SerializeField] Transform[] machineGuns;
     [SerializeField] Transform mortar;
@@ -27,12 +25,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     float cannonTimer;
     float mgTimer;
     float mortarTimer;
-    float roamTimer;
     float angleToPlayer;
     float stoppingDistOrg;
     bool playerInRange;
     Vector3 playerDir;
-    Vector3 startingPos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,7 +37,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
             colorOrig = model[i].material.color;
         }
         stoppingDistOrg = agent.stoppingDistance;
-        startingPos = transform.position;
     }
 
     // Update is called once per frame
@@ -51,36 +46,10 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         mgTimer += Time.deltaTime;
         mortarTimer += Time.deltaTime;
         animate.SetFloat("Move", agent.velocity.normalized.magnitude);
-        if (agent.remainingDistance < 0.01f)
-        {
-            roamTimer += Time.deltaTime;
-        }
         if (playerInRange && !canSeePlayer())
         {
-            checkRoam();
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
-        else if (!playerInRange)
-        {
-            checkRoam();
-        }
-    }
-
-    void checkRoam()
-    {
-        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
-        {
-            roam();
-        }
-    }
-    void roam()
-    {
-        roamTimer = 0;
-        agent.stoppingDistance = 0;
-        Vector3 ranPos = Random.insideUnitSphere * roamDist;
-        ranPos += startingPos;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
-        agent.SetDestination(hit.position);
     }
     bool canSeePlayer()
     {
@@ -92,7 +61,6 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         {
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
-                agent.SetDestination(GameManager.instance.player.transform.position);
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
@@ -156,7 +124,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     void fireMortar()
     {
         mortarTimer = 0;
-        Quaternion archShot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y + 10, playerDir.z));
+        Quaternion archShot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y + 3, playerDir.z));
         Instantiate(explosiveShell, mortar.position, archShot);
 
     }
@@ -180,9 +148,9 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         {
             model[i].material.color = Color.red;
         }
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < model.Length; i++)
         {
-            yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
     }
@@ -194,21 +162,23 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator firingPattern1()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        Instantiate(bullet, machineGuns[1].position, rot);
-        Instantiate(bullet, machineGuns[2].position, rot);
+        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x + 1.5f, playerDir.y, playerDir.z));
+        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x - 1.5f, playerDir.y, playerDir.z));
+        Instantiate(bullet, machineGuns[0].position, rotR);
+        Instantiate(bullet, machineGuns[1].position, rotL);
         yield return new WaitForSeconds(0.05f);
-        Instantiate(bullet, machineGuns[0].position, rot);
-        Instantiate(bullet, machineGuns[3].position, rot);
+        Instantiate(bullet, machineGuns[2].position, rotR);
+        Instantiate(bullet, machineGuns[3].position, rotL);
     }
     IEnumerator firingPattern2()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        Instantiate(cannonRound, cannons[0].position, rot);
-        Instantiate(cannonRound, cannons[1].position, rot);
-        yield return new WaitForSeconds(0.05f);
-        Instantiate(cannonRound, cannons[2].position, rot);
-        Instantiate(cannonRound, cannons[3].position, rot);
+        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x + 1, playerDir.y, playerDir.z));
+        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x - 1, playerDir.y, playerDir.z));
+        Instantiate(cannonRound, cannons[0].position, rotR);
+        Instantiate(cannonRound, cannons[1].position, rotL);
+        yield return new WaitForSeconds(0.05f);          
+        Instantiate(cannonRound, cannons[2].position, rotR);
+        Instantiate(cannonRound, cannons[3].position, rotL);
     }
     void die()
     {
