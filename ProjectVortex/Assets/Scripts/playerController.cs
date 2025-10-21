@@ -32,6 +32,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public Transform shootPos;
 
+    [SerializeField] TMPro.TextMeshProUGUI ammoText; 
+
     Vector3 moveDir;
     Vector3 playerVel;
     public Vector3 knockBack;
@@ -55,7 +57,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     {
         shootTimer += Time.deltaTime;
         healthRegenTimer += Time.deltaTime;
-       
+
+        ammoText.SetText(gunList[gunListPos].ammoCur.ToString() + "/" + gunList[gunListPos].ammoMax.ToString());
 
         regenHealth();
         movement();
