@@ -44,7 +44,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [Range(0, 1)] int gunListPos;
 
     float shootTimer;
-    float grenadeTimer;
+    public float grenadeTimer;
 
     public bool shootEnabled;
     public bool grenadeEnabled;

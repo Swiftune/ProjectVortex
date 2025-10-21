@@ -91,7 +91,7 @@ MonoBehaviour:
   - {fileID: 277616125642897301}
   agent: {fileID: 4716129530586188233}
   headPos: {fileID: 3452702886749592036}
-  HP: 28
+  HP: 30
   faceTargetSpeed: 2
   FOV: 180
   cannons:

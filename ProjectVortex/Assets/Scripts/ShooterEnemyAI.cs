@@ -128,7 +128,10 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
+        if (gameObject != null)
+        {
+            agent.SetDestination(GameManager.instance.player.transform.position);
+        }
         if (HP <= 0)
         {
             Destroy(gameObject);
