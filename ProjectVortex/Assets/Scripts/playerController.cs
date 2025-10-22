@@ -35,7 +35,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public Transform shootPos;
 
-    [SerializeField] TMPro.TextMeshProUGUI ammoText; 
+    [SerializeField] TMPro.TextMeshProUGUI ammoText;
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -149,7 +149,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void GrenadeEvent()
     {
-       if (grenadeEnabled && grenadeTimer >= throwRate)
+        if (grenadeEnabled && grenadeTimer >= throwRate)
         {
             throwGrenade();
         }
@@ -181,7 +181,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             Vector3 shootDir = shootPos.forward;
             shootDir.x = Random.Range(shootDir.x - bulletSpread, shootDir.x + bulletSpread);
-            shootDir.y = Random.Range(shootDir.y  - bulletSpread, shootDir.y + bulletSpread);
+            shootDir.y = Random.Range(shootDir.y - bulletSpread, shootDir.y + bulletSpread);
             shootDir.z = Random.Range(shootDir.z - bulletSpread, shootDir.z + bulletSpread);
             GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.LookRotation(shootDir));
             newBullet.GetComponent<Damage>().enemyDamage = bulletDamage;
@@ -231,14 +231,25 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void getGunStats(gunStats gun)
     {
-      if (gunList.Count > 1)
+        // since pistol is already assigned to element 0, just keep it the pistol.
+        if (gun == gunList[0])
         {
-            gunList.Remove(gunList[1]);
+            gunListPos = 0;
+            changeGun();
+            return;
         }
-        gunList.Add(gun);
 
-        gunListPos = gunList.Count - 1;
+        // saves a empty slot for a primary on element 1
+        if (gunList.Count < 2)
+        {
+            gunList.Add(null);
+        }
 
+        // on element 1 clone the gun that gets picked up
+        gunList[1] = Instantiate(gun);
+
+        // switch to the primary
+        gunListPos = 1;
         changeGun();
     }
 
@@ -271,7 +282,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             gunListPos++;
             changeGun();
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
             gunListPos--;
             changeGun();
