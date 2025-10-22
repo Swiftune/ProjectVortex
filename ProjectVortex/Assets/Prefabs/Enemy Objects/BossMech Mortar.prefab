@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 2594676880397203251}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.23190509, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.07, z: 0.05}
+  m_LocalPosition: {x: 0.052, y: 0, z: -0.1527}
+  m_LocalScale: {x: 0.17463, y: 0.244482, z: 0.17463}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,10 +51,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Damage
   type: 0
   rb: {fileID: 3429130641345701548}
-  damageAmount: 15
+  playerDamage: 0
+  enemyDamage: 10
   knockBackAmount: 10
   damageRate: 0
-  speed: 50
+  speed: 30
   destroyTime: 10
 --- !u!33 &6793933591548941710
 MeshFilter:
@@ -141,7 +142,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594676880397203251}
   serializedVersion: 5
-  m_Mass: 2
+  m_Mass: 25
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -208,7 +209,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 2
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -217,8 +218,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.039894104
+        value: 0.7650795
         inSlope: 0
         outSlope: 0
         tangentMode: 0

@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
+using System.Collections;
+using System.Collections.Generic;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IPickup
 {
     [SerializeField] CharacterController controller;
 
@@ -12,44 +14,64 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float speed;
     [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
+    [SerializeField] GameObject gunPos;
+    [SerializeField] float rayDist;
+    [SerializeField] LayerMask collisionLayer;
 
-    [SerializeField] float shootRate;
-    [SerializeField] float bulletSpread;
-    [SerializeField] float bulletCount;
-    [SerializeField] float knockBackTime;
+    public GameObject bullet;
+    public GameObject grenade;
+    public int bulletDamage;
+    public float shootRate;
+    public int shootSpeed;
+    public int shootTime;
+    public int throwRate;
+    public float bulletSpread;
+    public float bulletCount;
+    public float kickBack;
+    public bool isInfinite;
+    public float knockBackTime;
+    public List<gunStats> gunList;
 
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform shootPos;
+    public Transform shootPos;
+
+    [SerializeField] TMPro.TextMeshProUGUI ammoText; 
 
     Vector3 moveDir;
     Vector3 playerVel;
     public Vector3 knockBack;
+    public int grenadeVelocity;
 
-    int jumpCount;
     float HPOrig;
+    [Range(0, 1)] int gunListPos;
 
     float shootTimer;
+    public float grenadeTimer;
 
     public bool shootEnabled;
+    public bool grenadeEnabled;
     float healthRegenTimer;
 
 
     void Start()
     {
         HPOrig = HP;
+        shootTimer = shootRate;
+        grenadeTimer = throwRate;
     }
 
     void Update()
     {
         shootTimer += Time.deltaTime;
+        grenadeTimer += Time.deltaTime;
         healthRegenTimer += Time.deltaTime;
-       
+
+        ammoText.SetText(gunList[gunListPos].ammoCur.ToString() + "/" + gunList[gunListPos].ammoMax.ToString());
 
         regenHealth();
         movement();
         ShootEvent();
+        GrenadeEvent();
         sprint();
     }
 
@@ -79,7 +101,6 @@ public class playerController : MonoBehaviour, IDamage
             if (playerVel.y < 0)
                 playerVel.y = 0;
             knockBack.y = 0;
-            jumpCount = 0;
         }
         else
         {
@@ -90,6 +111,8 @@ public class playerController : MonoBehaviour, IDamage
 
         Vector3 finalMove = (moveDir + knockBack) * speed + playerVel;
         controller.Move(finalMove * Time.deltaTime);
+
+        switchGun();
     }
 
     void sprint()
@@ -106,26 +129,53 @@ public class playerController : MonoBehaviour, IDamage
 
     public void jump()
     {
-        if (jumpCount < jumpCountMax)
+
+        if (Physics.Raycast(transform.position, Vector3.down, rayDist, collisionLayer))
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
 
             playerVel.y = jumpSpeed;
-            jumpCount++;
         }
     }
 
     public void ShootEvent()
     {
-        if (shootEnabled && shootTimer >= shootRate)
+        if (shootEnabled && shootTimer >= shootRate && gunList.Count > 0 && (gunList[gunListPos].ammoCur > 0 || gunList[gunListPos].isInfinite))
         {
             shoot();
         }
     }
 
+    public void GrenadeEvent()
+    {
+       if (grenadeEnabled && grenadeTimer >= throwRate)
+        {
+            throwGrenade();
+        }
+    }
+
+    void throwGrenade()
+    {
+        grenadeTimer = 0;
+
+        Vector3 shootDir = shootPos.forward;
+        Vector3 throwPos = shootPos.position;
+        throwPos.y += 1;
+        GameObject newGrenade = Instantiate(grenade, throwPos, Quaternion.LookRotation(shootDir));
+        newGrenade.GetComponent<Rigidbody>().linearVelocity = shootDir * grenadeVelocity;
+
+    }
+
     void shoot()
     {
+        gunList[gunListPos].ammoCur--;
+
+        if (gunList[gunListPos].isInfinite && gunList[gunListPos].ammoCur <= 0)
+        {
+            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        }
+
         shootTimer = 0;
         for (int i = 0; i < bulletCount; i++)
         {
@@ -134,7 +184,11 @@ public class playerController : MonoBehaviour, IDamage
             shootDir.y = Random.Range(shootDir.y  - bulletSpread, shootDir.y + bulletSpread);
             shootDir.z = Random.Range(shootDir.z - bulletSpread, shootDir.z + bulletSpread);
             GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.LookRotation(shootDir));
+            newBullet.GetComponent<Damage>().enemyDamage = bulletDamage;
+            newBullet.GetComponent<Damage>().speed = shootSpeed;
+            newBullet.GetComponent<Damage>().destroyTime = shootTime;
         }
+        knockBack -= shootPos.forward * kickBack;
     }
 
     public void takeDamage(int amount, Vector3 direction)
@@ -174,4 +228,54 @@ public class playerController : MonoBehaviour, IDamage
     {
         knockBack = direction;
     }
+
+    public void getGunStats(gunStats gun)
+    {
+      if (gunList.Count > 1)
+        {
+            gunList.Remove(gunList[1]);
+        }
+        gunList.Add(gun);
+
+        gunListPos = gunList.Count - 1;
+
+        changeGun();
+    }
+
+    void changeGun()
+    {
+
+        bulletDamage = gunList[gunListPos].shootDamage;
+        shootRate = gunList[gunListPos].shootRate;
+        shootSpeed = gunList[gunListPos].shootSpeed;
+        shootTime = gunList[gunListPos].shootTime;
+        bulletSpread = gunList[gunListPos].spread;
+        bulletCount = gunList[gunListPos].bulletCount;
+        kickBack = gunList[gunListPos].kickBack;
+        bullet = gunList[gunListPos].bullet;
+
+        GameObject gunClone = Instantiate(gunList[gunListPos].gunModel, gunPos.transform.position, gunPos.transform.rotation);
+        if (GameObject.Find("Main Camera/Gun Model") != null)
+        {
+            Destroy(GameObject.Find("Main Camera/Gun Model"));
+        }
+
+        gunClone.name = "Gun Model";
+
+        gunClone.transform.parent = this.transform.Find("Main Camera").transform;
+    }
+
+    void switchGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count - 1)
+        {
+            gunListPos++;
+            changeGun();
+        } else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            changeGun();
+        }
+    }
+
 }

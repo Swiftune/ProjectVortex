@@ -1,19 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BossEnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer[] model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
-    [SerializeField] Transform bodyRot;
     [SerializeField] int HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
-    [SerializeField] int sprintSpeed;
     [SerializeField] Transform[] cannons;
     [SerializeField] Transform[] machineGuns;
     [SerializeField] Transform mortar;
@@ -24,19 +21,19 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     [SerializeField] float gunRate;
     [SerializeField] float mortarRate;
     [SerializeField] Animator animate;
+    [SerializeField] private Slider healthBar; 
 
     Color colorOrig;
     float cannonTimer;
     float mgTimer;
     float mortarTimer;
-    float roamTimer;
     float angleToPlayer;
     float stoppingDistOrg;
     bool playerInRange;
     Vector3 playerDir;
-    Vector3 startingPos;
-    Quaternion defaultRot;
-    float speedOrig;
+
+    public int HPcurr;
+    public int HPmax;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,9 +42,9 @@ public class BossEnemyAI : MonoBehaviour, IDamage
             colorOrig = model[i].material.color;
         }
         stoppingDistOrg = agent.stoppingDistance;
-        startingPos = transform.position;
-        speedOrig = agent.speed;
-        defaultRot = bodyRot.transform.rotation;
+        HPmax = HP;
+        HPcurr = HP;
+        UpdateHealthBar();
     }
 
     // Update is called once per frame
@@ -56,42 +53,12 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         cannonTimer += Time.deltaTime;
         mgTimer += Time.deltaTime;
         mortarTimer += Time.deltaTime;
-        if (agent.remainingDistance < 0.01f)
-        {
-            roamTimer += Time.deltaTime;
-        }
+        UpdateHealthBar();
+        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         if (playerInRange && !canSeePlayer())
         {
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
-            checkRoam();
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
-        else if (!playerInRange)
-        {
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
-            checkRoam();
-        }
-        if (runToPos())
-        {
-            agent.speed = sprintSpeed;
-        }
-    }
-
-    void checkRoam()
-    {
-        if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
-        {
-            roam();
-        }
-    }
-    void roam()
-    {
-        roamTimer = 0;
-        agent.stoppingDistance = 0;
-        Vector3 ranPos = Random.insideUnitSphere * roamDist;
-        ranPos += startingPos;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, roamDist, 1);
-        agent.SetDestination(hit.position);
     }
     bool canSeePlayer()
     {
@@ -103,17 +70,23 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         {
             if (angleToPlayer <= FOV && Hit.collider.CompareTag("Player"))
             {
-                agent.SetDestination(GameManager.instance.player.transform.position);
                 if (agent.remainingDistance <= stoppingDistOrg)
                 {
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
-                    //StartCoroutine(firingPattern());
+                    if (cannonTimer > cannonRate)
+                    {
+                        animate.SetTrigger("CannonFire");
+                        fireCannons();
+                    }
+                    if (mgTimer > gunRate)
+                    {
+                        animate.SetTrigger("MGFire");
+                        fireMachineGuns();
+                    }
                 }
                 else
                 {
-                    agent.speed = sprintSpeed;
-                    animate.SetTrigger("Run");
                     if (mortarTimer > mortarRate)
                     {
                         fireMortar();
@@ -146,49 +119,36 @@ public class BossEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    public void fireCannons()
+    void fireCannons()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        if (cannonTimer > cannonRate)
-        {
-            cannonTimer = 0;
-            for (int i = 0; i < cannons.Length; i++)
-            {
-                Instantiate(cannonRound, cannons[i].position, rot);
-            }
-        }
+        cannonTimer = 0;
+        StartCoroutine(firingPattern2());
 
     }
-    public void fireMachineGuns()
+    void fireMachineGuns()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        if (mgTimer > gunRate)
-        {
-            mgTimer = 0;
-            for (int i = 0; i < machineGuns.Length; i++)
-            {
-                Instantiate(cannonRound, machineGuns[i].position, rot);
-            }
-        }
-
+        mgTimer = 0;
+        StartCoroutine(firingPattern1());
     }
     void fireMortar()
     {
         mortarTimer = 0;
-        Quaternion archShot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y + 10, playerDir.z));
+        Quaternion archShot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y + 3, playerDir.z));
         Instantiate(explosiveShell, mortar.position, archShot);
 
     }
     public void takeDamage(int amount, Vector3 direction)
     {
-        HP -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
-        if (HP <= 0)
+        HPcurr -= amount;
+        UpdateHealthBar();
+        if (HPcurr <= 0)
         {
             die();
         }
         else
         {
+            faceTarget();
+            agent.SetDestination(GameManager.instance.player.transform.position);
             StartCoroutine(flashRed());
         }
     }
@@ -198,34 +158,46 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         {
             model[i].material.color = Color.red;
         }
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < model.Length; i++)
         {
-            yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
     }
     IEnumerator pauseForDeath()
     {
         animate.SetTrigger("Death");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
-    IEnumerator firingPattern()
+    IEnumerator firingPattern1()
     {
-        animate.SetTrigger("CannonFire");
-        yield return new WaitForSeconds(6.5f);
-        animate.SetTrigger("MGFire");
+        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x - 1.5f, playerDir.y, playerDir.z));
+        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x + 1.5f, playerDir.y, playerDir.z));
+        Instantiate(bullet, machineGuns[0].position, rotR);
+        Instantiate(bullet, machineGuns[1].position, rotL);
+        yield return new WaitForSeconds(0.05f);
+        Instantiate(bullet, machineGuns[2].position, rotR);
+        Instantiate(bullet, machineGuns[3].position, rotL);
+    }
+    IEnumerator firingPattern2()
+    {
+        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x + 1, playerDir.y, playerDir.z));
+        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x - 1, playerDir.y, playerDir.z));
+        Instantiate(cannonRound, cannons[0].position, rotR);
+        Instantiate(cannonRound, cannons[1].position, rotL);
+        yield return new WaitForSeconds(0.05f);          
+        Instantiate(cannonRound, cannons[2].position, rotR);
+        Instantiate(cannonRound, cannons[3].position, rotL);
     }
     void die()
     {
         StartCoroutine(pauseForDeath());
     }
-    bool runToPos()
+
+    void UpdateHealthBar()
     {
-        if (agent.remainingDistance > stoppingDistOrg + 1)
-        {
-            return true;
-        }
-        return false;
+        
+        healthBar.value = (float)HPcurr / (float)HPmax; 
     }
 }

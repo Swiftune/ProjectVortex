@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 2594676880397203251}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0.0857, y: -0, z: -0.0835}
+  m_LocalScale: {x: 0.21011516, y: 0.19632013, z: 0.20580862}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,11 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Damage
   type: 0
   rb: {fileID: 3429130641345701548}
-  damageAmount: 10
+  playerDamage: 2
+  enemyDamage: 0
   knockBackAmount: 5
   damageRate: 0
   speed: 30
-  destroyTime: 5
+  destroyTime: 2
 --- !u!33 &6793933591548941710
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -208,7 +209,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -217,8 +218,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.007980347
+        value: 0.6507931
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -239,8 +240,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9433962, g: 0.80198133, b: 0.18096577, a: 1}
-      key1: {r: 0.9433962, g: 0.6747524, b: 0.056366257, a: 1}
+      key0: {r: 0.5321782, g: 0.6584083, b: 0.7798742, a: 1}
+      key1: {r: 0.7987421, g: 0.7510185, b: 0.7510185, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -248,7 +249,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
+      ctime1: 19275
       ctime2: 0
       ctime3: 0
       ctime4: 0

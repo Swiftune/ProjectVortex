@@ -10,13 +10,12 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] GameObject weapon;
+    [SerializeField] Transform weaponHolder;
     [SerializeField] float attackRate;
     [SerializeField] Animator animate;
 
     Color colorOrig;
     float attackTimer;
-    float movingToPlayer;
-    float angleToPlayer;
     Vector3 playerDir;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,7 +30,6 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         attackTimer += Time.deltaTime;
-        movingToPlayer += Time.deltaTime;
         animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         RushPlayer();
     }
@@ -40,14 +38,12 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
         playerDir = GameManager.instance.player.transform.position - headPos.position;
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
         Debug.DrawRay(headPos.position, playerDir, Color.greenYellow);
         RaycastHit Hit;
         if (Physics.Raycast(headPos.position, playerDir, out Hit))
         {
             if(agent.remainingDistance <= agent.stoppingDistance)
             {
-                movingToPlayer = 0;
                 if (attackTimer >= attackRate)
                 {
                     attackAnim();
@@ -62,7 +58,7 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
     }
     public void activateAttack()
     {
-        Instantiate(weapon);
+        Instantiate(weapon, weaponHolder.position, weaponHolder.rotation);
     }
     public void takeDamage(int amount, Vector3 direction)
     {
@@ -82,9 +78,9 @@ public class MeleeEnemyAI : MonoBehaviour, IDamage
         {
             model[i].material.color = Color.red;
         }
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < model.Length; i++)
         {
-            yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
     }

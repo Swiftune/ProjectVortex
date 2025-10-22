@@ -6,22 +6,20 @@ public class RoomController : MonoBehaviour
     [SerializeField] private GameObject doorExit;
     [SerializeField] private GameObject doorEnter;
     [SerializeField] private List<GameObject> enemies;
+    [SerializeField] private GameObject[] enemySpawnPoints;
     [SerializeField] private Collider triggerArea;
 
-    private bool roomCleared;
+    public bool roomCleared;
     private bool roomActivated;
+    private bool roomClearCheck;
+    public int enemyCount;
 
     void Start()
     {
         // Adds this room to the goal count
         GameManager.instance.UpdateGameGoal(1);
 
-        // Disable enemies until player enters
-        foreach (var enemy in enemies)
-        {
-            if (enemy != null)
-                enemy.SetActive(false);
-        }
+        roomClearCheck = false;
 
         // Start with both doors unlocked
         SetDoorsLocked(false);
@@ -30,23 +28,9 @@ public class RoomController : MonoBehaviour
 
     void Update()
     {
-        if (!roomActivated || roomCleared)
-            return;
-
-        bool allDead = true;
-
-        foreach (var enemy in enemies)
+        if (roomCleared && !roomClearCheck)
         {
-            if (enemy != null && enemy.activeInHierarchy)
-            {
-                allDead = false;
-                break;
-            }
-        }
-
-        if (allDead)
-        {
-            roomCleared = true;
+            roomClearCheck = true;
             UnlockExit();
         }
     }
@@ -60,17 +44,33 @@ public class RoomController : MonoBehaviour
         {
             roomActivated = true;
             LockEntry();
+         
+             spawnEnemies();
 
-            // Activate enemies when player enters
-            foreach (var enemy in enemies)
-            {
-                if (enemy != null)
-                    enemy.SetActive(true);
-            }
-
-            // Optional: close exit until room cleared (that way it checks if there's 
+            // Optional: close exit until room cleared (that way it checks if it's the last room)
             if (doorExit != null)
                 doorExit.SetActive(true);
+        }
+    }
+
+void spawnEnemies()
+    {
+        int spawnCount = 0;
+        if (enemies.Count <= 0)
+        {
+            roomCleared = true;
+        }
+        foreach (var enemy in enemies)
+        {
+            GameObject newEnemy = Instantiate(enemy, enemySpawnPoints[spawnCount].transform.position, enemySpawnPoints[spawnCount].transform.rotation);
+            newEnemy.GetComponent<enemyRoomTracker>().thisRoom = this;
+            spawnCount++;
+            enemyCount++;
+            if (spawnCount == enemySpawnPoints.Length)
+            {
+                return;
+            }
+
         }
     }
 
@@ -96,4 +96,6 @@ public class RoomController : MonoBehaviour
         if (doorExit != null)
             doorExit.SetActive(locked);
     }
+
+
 }

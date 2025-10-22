@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class Damage : MonoBehaviour
 {
@@ -8,18 +7,19 @@ public class Damage : MonoBehaviour
     [SerializeField] damageType type;
     [SerializeField] Rigidbody rb;
 
-    [SerializeField] int damageAmount;
-    [SerializeField] float knockBackAmount;
-    [SerializeField] float damageRate;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    public int playerDamage;
+    public int enemyDamage;
+    public float knockBackAmount;
+    public float damageRate;
+    public int speed;
+    public float destroyTime;
 
     bool isDamaging;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (type == damageType.moving || type == damageType.homing)
+        if (type == damageType.moving || type == damageType.homing || type == damageType.stationary)
         {
             Destroy(gameObject, destroyTime);
 
@@ -51,8 +51,15 @@ private void OnTriggerEnter(Collider other)
         if (dmg != null && (type == damageType.moving || type == damageType.stationary || type == damageType.homing))
         {
             Vector3 pushBack = (other.transform.position - transform.position).normalized;
-            pushBack.y = -pushBack.y;
-            dmg.takeDamage(damageAmount, (pushBack * knockBackAmount));
+            pushBack.y = knockBackAmount / 5;
+
+            if (other.CompareTag("Enemy"))
+            {
+                dmg.takeDamage(enemyDamage, (pushBack * knockBackAmount));
+            } else if (other.CompareTag("Player"))
+            {
+                dmg.takeDamage(playerDamage, (pushBack * knockBackAmount));
+            }
         }
 
         if (type == damageType.homing || type == damageType.moving)
@@ -82,7 +89,7 @@ private void OnTriggerEnter(Collider other)
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
-        d.takeDamage(damageAmount, Vector3.zero);
+        d.takeDamage(enemyDamage, Vector3.zero);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
     }

@@ -12,8 +12,6 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] float roamPauseTime;
-    [SerializeField] float sprintSpeed;
-    [SerializeField] float timeTillPush;
     [SerializeField] Transform[] shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -22,10 +20,8 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
     Color colorOrig;
     float shootTimer;
     float roamTimer;
-    float pushTimer;
     float angleToPlayer;
     float stoppingDistOrg;
-    float speedOrig;
     bool playerInRange;
     Vector3 playerDir;
     Vector3 startingPos;
@@ -38,13 +34,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         }
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
-        speedOrig = agent.speed;    
     }
-
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
+        animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         if (agent.remainingDistance < 0.01f)
         {
             roamTimer += Time.deltaTime;
@@ -52,21 +47,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         if (playerInRange && !canSeePlayer())
         {
             checkRoam();
-            agent.speed = speedOrig;
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
         }
         else if (!playerInRange)
         {
             checkRoam();
-            agent.speed = speedOrig;
-            animate.SetFloat("Walk", agent.velocity.normalized.magnitude);
-        }
-        if (runToPos())
-        {
-            agent.speed = sprintSpeed;
         }
     }
-
     void checkRoam()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
@@ -97,6 +83,7 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (shootTimer > shootRate)
                 {
+                    shootTimer = 0;
                     animate.SetTrigger("Shoot");
                 }
                 if (agent.remainingDistance <= stoppingDistOrg)
@@ -104,18 +91,12 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
                     faceTarget();
                     agent.stoppingDistance = stoppingDistOrg;
                 }
-                else
-                {
-                    agent.speed = sprintSpeed;
-                    animate.SetTrigger("Run");
-                }
                 return true;
             }
         }
         return false;
 
     }
-
     void faceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
@@ -136,29 +117,24 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
-    public void shoot()
+    public void shootEvent()
     {
-        shootTimer = 0;
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x -1, playerDir.y, playerDir.z));
         for (int i = 0; i < shootPos.Length; i++)
         {
-            Instantiate(bullet, shootPos[i].position, shootPos[i].rotation);
+            Instantiate(bullet, shootPos[i].position, rot);
         }
     }
-    void melee()
-    {
-        animate.SetTrigger("Melee");
-    }
-
     public void takeDamage(int amount, Vector3 direction)
     {
         HP -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
         if (HP <= 0)
         {
             Destroy(gameObject);
         }
         else
         {
+            agent.SetDestination(GameManager.instance.player.transform.position);
             StartCoroutine(flashRed());
         }
     }
@@ -168,18 +144,10 @@ public class ShooterEnemyAI : MonoBehaviour, IDamage
         {
             model[i].material.color = Color.red;
         }
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < model.Length; i++)
         {
-            yield return new WaitForSeconds(0.1f);
             model[i].material.color = colorOrig;
         }
-    }
-    bool runToPos()
-    {
-        if (agent.remainingDistance > stoppingDistOrg + 1)
-        {
-            return true;
-        }
-        return false;
     }
 }

@@ -26,7 +26,10 @@ public class InputManager : MonoBehaviour
         pInput.UI.Pause.started += Pause_Started;
         pInput.Combat.Shoot.performed += Shoot_performed;
         pInput.Combat.Shoot.canceled += Shoot_canceled;
+        pInput.Combat.Grenade.performed += Grenade_performed;
+        pInput.Combat.Grenade.canceled += Grenade_canceled;
         pInput.Movement.Jump.started += Jump_started;
+
 
         player = GameManager.instance.player.GetComponent<playerController>();
     }
@@ -40,7 +43,18 @@ public class InputManager : MonoBehaviour
         pInput.UI.Pause.started -= Pause_Started; // this will be called when the event is hit
         pInput.Combat.Shoot.performed -= Shoot_performed;
         pInput.Combat.Shoot.canceled -= Shoot_canceled;
+        pInput.Combat.Grenade.performed -= Grenade_performed;
+        pInput.Combat.Grenade.canceled -= Grenade_canceled;
         pInput.Movement.Jump.performed -= Jump_started;
+    }
+
+    private void Grenade_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        player.grenadeEnabled = true;
+    }
+    private void Grenade_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        player.grenadeEnabled = false;
     }
 
     private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
