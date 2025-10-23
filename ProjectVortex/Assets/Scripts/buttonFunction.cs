@@ -29,6 +29,10 @@ public class ButtonFunction : MonoBehaviour
         InputManager.Instance.PauseEvent();
     }
 
+    public void LoadNextLevel(int sceneID)
+    {
+        SceneManager.LoadScene(sceneID);
+    }
 
     public void quit()
     {
