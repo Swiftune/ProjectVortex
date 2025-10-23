@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Damage
   type: 1
   rb: {fileID: -7270775968544171491}
-  playerDamage: 0
-  enemyDamage: 3
+  playerDamage: 3
+  enemyDamage: 0
   knockBackAmount: 5
   damageRate: 1
   speed: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8873250057614326163}
   - component: {fileID: -7270775968544171491}
   - component: {fileID: -8548284360322850854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Sniper Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,9 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Damage
   type: 0
   rb: {fileID: -7270775968544171491}
-  playerDamage: 0
-  enemyDamage: 2
-  knockBackAmount: 1
+  playerDamage: 1
+  enemyDamage: 0
+  knockBackAmount: 0
   damageRate: 1
   speed: 50
   destroyTime: 3

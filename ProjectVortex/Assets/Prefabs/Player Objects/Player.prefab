@@ -256,15 +256,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerController
   controller: {fileID: 4228449030356161153}
-  HP: 5
+  HP: 10
   healthRegenThreshold: 5
   healthRegenRate: 1
   speed: 10
   sprintMod: 1.5
   jumpSpeed: 15
-  jumpCountMax: 1
   gravity: 30
   gunPos: {fileID: 5411647177664298078}
+  rayDist: 1
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1
   bullet: {fileID: 2594676880397203251, guid: ff2e8869c20ddff4e8b3a6b15df28b3a, type: 3}
   grenade: {fileID: 592045020470273889, guid: 8634d03f4cbbcb24ab78cd86b919f352, type: 3}
   bulletDamage: 1
@@ -280,8 +283,10 @@ MonoBehaviour:
   gunList:
   - {fileID: 11400000, guid: fea59eb2ccc547344824381d56a67973, type: 2}
   shootPos: {fileID: 5856671837762262144}
+  ammoText: {fileID: 0}
   knockBack: {x: 0, y: 0, z: 0}
   grenadeVelocity: 10
+  grenadeTimer: 0
   shootEnabled: 0
   grenadeEnabled: 0
 --- !u!33 &6283418428446449884
