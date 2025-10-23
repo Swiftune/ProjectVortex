@@ -1,28 +1,36 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnCubicle : MonoBehaviour
 {
-    public GameObject door;
+    public GameObject doorHinge;
     [SerializeField] GameObject spawnPoint;
     [SerializeField] GameObject meleeType;
     bool playerEntered;
+    private void Start()
+    { 
+        doorHinge.transform.rotation = Quaternion.LookRotation(new Vector3(-90, 0, 0));
+    }
     private void Update()
     {
-        if(door.transform.rotation.x == 90)
+        if (playerEntered)
         {
-            Instantiate(meleeType, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            openDoor();
         }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-
+            playerEntered = true;
         }
     }
-    void openDoor()
+    IEnumerator openDoor()
     {
-        Quaternion open = Quaternion.LookRotation(new Vector3(90, 0, 0));
-        door.transform.rotation = Quaternion.Lerp(door.transform.rotation, open, Time.deltaTime);
+        Quaternion open = Quaternion.LookRotation(new Vector3(180, 0, 0));
+        doorHinge.transform.rotation = Quaternion.Lerp(doorHinge.transform.rotation, open, Time.deltaTime);
+        yield return new WaitForSeconds(3f);
+        GameObject newEnemy = Instantiate(meleeType, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        playerEntered = false;
     }
 }
