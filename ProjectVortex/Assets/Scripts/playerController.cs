@@ -14,9 +14,10 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     [SerializeField] float speed;
     [SerializeField] float sprintMod;
     [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpCountMax;
     [SerializeField] int gravity;
     [SerializeField] GameObject gunPos;
+    [SerializeField] float rayDist;
+    [SerializeField] LayerMask collisionLayer;
 
     public GameObject bullet;
     public GameObject grenade;
@@ -34,19 +35,18 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public Transform shootPos;
 
-    [SerializeField] TMPro.TextMeshProUGUI ammoText; 
+    [SerializeField] TMPro.TextMeshProUGUI ammoText;
 
     Vector3 moveDir;
     Vector3 playerVel;
     public Vector3 knockBack;
     public int grenadeVelocity;
 
-    int jumpCount;
     float HPOrig;
     [Range(0, 1)] int gunListPos;
 
     float shootTimer;
-    float grenadeTimer;
+    public float grenadeTimer;
 
     public bool shootEnabled;
     public bool grenadeEnabled;
@@ -101,7 +101,6 @@ public class playerController : MonoBehaviour, IDamage, IPickup
             if (playerVel.y < 0)
                 playerVel.y = 0;
             knockBack.y = 0;
-            jumpCount = 0;
         }
         else
         {
@@ -130,13 +129,13 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void jump()
     {
-        if (controller.isGrounded || jumpCount < jumpCountMax)
+
+        if (Physics.Raycast(transform.position, Vector3.down, rayDist, collisionLayer))
         {
             if (playerVel.y < 0)
                 playerVel.y = 0;
 
             playerVel.y = jumpSpeed;
-            jumpCount++;
         }
     }
 
@@ -150,7 +149,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
 
     public void GrenadeEvent()
     {
-       if (grenadeEnabled && grenadeTimer >= throwRate)
+        if (grenadeEnabled && grenadeTimer >= throwRate)
         {
             throwGrenade();
         }
@@ -182,7 +181,7 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             Vector3 shootDir = shootPos.forward;
             shootDir.x = Random.Range(shootDir.x - bulletSpread, shootDir.x + bulletSpread);
-            shootDir.y = Random.Range(shootDir.y  - bulletSpread, shootDir.y + bulletSpread);
+            shootDir.y = Random.Range(shootDir.y - bulletSpread, shootDir.y + bulletSpread);
             shootDir.z = Random.Range(shootDir.z - bulletSpread, shootDir.z + bulletSpread);
             GameObject newBullet = Instantiate(bullet, shootPos.position, Quaternion.LookRotation(shootDir));
             newBullet.GetComponent<Damage>().enemyDamage = bulletDamage;
@@ -228,19 +227,29 @@ public class playerController : MonoBehaviour, IDamage, IPickup
     public void applyKnockBack(Vector3 direction)
     {
         knockBack = direction;
-        jumpCount += 1;
     }
 
     public void getGunStats(gunStats gun)
     {
-      if (gunList.Count > 1)
+        // since pistol is already assigned to element 0, just keep it the pistol.
+        if (gun == gunList[0])
         {
-            gunList.Remove(gunList[1]);
+            gunListPos = 0;
+            changeGun();
+            return;
         }
-        gunList.Add(gun);
 
-        gunListPos = gunList.Count - 1;
+        // saves a empty slot for a primary on element 1
+        if (gunList.Count < 2)
+        {
+            gunList.Add(null);
+        }
 
+        // on element 1 clone the gun that gets picked up
+        gunList[1] = Instantiate(gun);
+
+        // switch to the primary
+        gunListPos = 1;
         changeGun();
     }
 
@@ -273,7 +282,8 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         {
             gunListPos++;
             changeGun();
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
         {
             gunListPos--;
             changeGun();

@@ -44,6 +44,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         stoppingDistOrg = agent.stoppingDistance;
         HPmax = HP;
         HPcurr = HP;
+        UpdateHealthBar();
     }
 
     // Update is called once per frame
@@ -52,6 +53,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
         cannonTimer += Time.deltaTime;
         mgTimer += Time.deltaTime;
         mortarTimer += Time.deltaTime;
+        UpdateHealthBar();
         animate.SetFloat("Move", agent.velocity.normalized.magnitude);
         if (playerInRange && !canSeePlayer())
         {
@@ -137,9 +139,9 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     public void takeDamage(int amount, Vector3 direction)
     {
-        HP -= amount;
+        HPcurr -= amount;
         UpdateHealthBar();
-        if (HP <= 0)
+        if (HPcurr <= 0)
         {
             die();
         }
@@ -170,8 +172,8 @@ public class BossEnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator firingPattern1()
     {
-        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x + 1.5f, playerDir.y, playerDir.z));
-        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x - 1.5f, playerDir.y, playerDir.z));
+        Quaternion rotR = Quaternion.LookRotation(new Vector3(playerDir.x - 1.5f, playerDir.y, playerDir.z));
+        Quaternion rotL = Quaternion.LookRotation(new Vector3(playerDir.x + 1.5f, playerDir.y, playerDir.z));
         Instantiate(bullet, machineGuns[0].position, rotR);
         Instantiate(bullet, machineGuns[1].position, rotL);
         yield return new WaitForSeconds(0.05f);
@@ -195,6 +197,7 @@ public class BossEnemyAI : MonoBehaviour, IDamage
 
     void UpdateHealthBar()
     {
-        healthBar.value = HPcurr / HPmax; 
+        
+        healthBar.value = (float)HPcurr / (float)HPmax; 
     }
 }

@@ -89,7 +89,7 @@ private void OnTriggerEnter(Collider other)
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
-        d.takeDamage(0, Vector3.zero);
+        d.takeDamage(enemyDamage, Vector3.zero);
         yield return new WaitForSeconds(damageRate);
         isDamaging = false;
     }
