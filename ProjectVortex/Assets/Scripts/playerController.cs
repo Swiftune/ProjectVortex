@@ -66,8 +66,10 @@ public class playerController : MonoBehaviour, IDamage, IPickup
         grenadeTimer += Time.deltaTime;
         healthRegenTimer += Time.deltaTime;
 
-        ammoText.SetText(gunList[gunListPos].ammoCur.ToString() + "/" + gunList[gunListPos].ammoMax.ToString());
-
+        if (ammoText != null)
+        {
+            ammoText.SetText(gunList[gunListPos].ammoCur.ToString() + "/" + gunList[gunListPos].ammoMax.ToString());
+        }
         regenHealth();
         movement();
         ShootEvent();

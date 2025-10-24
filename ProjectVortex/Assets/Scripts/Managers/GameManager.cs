@@ -98,12 +98,16 @@ public class GameManager : MonoBehaviour
 
     public void checkHP()
     {
-        if (playerScript.GetHPOrig() > 0)
+        if (playerScript != null && slider != null)
         {
-            slider.maxValue = playerScript.GetHPOrig();
-            slider.minValue = 0;
+
+            if (playerScript.GetHPOrig() > 0)
+            {
+                slider.maxValue = playerScript.GetHPOrig();
+                slider.minValue = 0;
+            }
+            slider.value = playerScript.GetHP();
         }
-        slider.value = playerScript.GetHP();
     }
 
     public void stateMain()
