@@ -370,6 +370,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss Mech (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 626815284642016925, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 626815284642016925, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5994485321003012589, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.3552055
@@ -829,6 +837,14 @@ PrefabInstance:
     - target: {fileID: 161803064653883977, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
       propertyPath: m_Name
       value: Boss Mech
+      objectReference: {fileID: 0}
+    - target: {fileID: 626815284642016925, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 626815284642016925, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5994485321003012589, guid: f3b0120154a9e5b44a1bbe9c93a3489b, type: 3}
       propertyPath: m_LocalPosition.x
