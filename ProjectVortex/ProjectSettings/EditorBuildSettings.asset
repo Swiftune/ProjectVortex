@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/Nigel.unity
     guid: c828508613cac6748ae1b375e8e013b3
+  - enabled: 1
+    path: Assets/Levels/Nigel 2.unity
+    guid: 5fbbaee5237211b4d85018ceb9c0308a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: bd2ef1014d921a04e90333768d4be030, type: 3}
   m_UseUCBPForAssetBundles: 0

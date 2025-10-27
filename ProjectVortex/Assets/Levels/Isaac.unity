@@ -2222,6 +2222,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2923252013550951490, guid: 1dcf0fa6a662feb41876a7338d95944d, type: 3}
+      propertyPath: m_Name
+      value: ammoCount
+      objectReference: {fileID: 0}
     - target: {fileID: 7121197959001164284, guid: 1dcf0fa6a662feb41876a7338d95944d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.97331
