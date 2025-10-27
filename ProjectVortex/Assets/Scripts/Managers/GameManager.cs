@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,12 +39,17 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = timeScaleOrig;
         stateMain();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         checkHP();
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("startMenu"))
+        {
+            statePause();
+        }
     }
 
     public void statePause()
