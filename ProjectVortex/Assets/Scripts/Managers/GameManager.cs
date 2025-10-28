@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,12 +39,17 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = timeScaleOrig;
         stateMain();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         checkHP();
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("startMenu"))
+        {
+            statePause();
+        }
     }
 
     public void statePause()
@@ -98,12 +104,16 @@ public class GameManager : MonoBehaviour
 
     public void checkHP()
     {
-        if (playerScript.GetHPOrig() > 0)
+        if (playerScript != null && slider != null)
         {
-            slider.maxValue = playerScript.GetHPOrig();
-            slider.minValue = 0;
+
+            if (playerScript.GetHPOrig() > 0)
+            {
+                slider.maxValue = playerScript.GetHPOrig();
+                slider.minValue = 0;
+            }
+            slider.value = playerScript.GetHP();
         }
-        slider.value = playerScript.GetHP();
     }
 
     public void stateMain()

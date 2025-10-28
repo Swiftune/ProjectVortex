@@ -32,6 +32,7 @@ public class ButtonFunction : MonoBehaviour
     public void LoadNextLevel(int sceneID)
     {
         SceneManager.LoadScene(sceneID);
+        GameManager.instance.stateUnpause();
     }
 
     public void quit()
